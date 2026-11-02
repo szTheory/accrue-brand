@@ -327,7 +327,7 @@ figcaption{margin-top:var(--cap-gap);font-size:14px;color:var(--mute)}figcaption
 .stk .mk{max-width:220px}
 .confirmdemo{flex-wrap:wrap}.snd [data-play]{grid-template-columns:72px 1fr;gap:var(--s3)}.snd [data-play] .dl{grid-column:span 2}
 .files td:first-child{width:auto}.files code{white-space:normal;word-break:break-all;display:block}.stage{padding:var(--s5);height:200px}.ctl{bottom:var(--s2);right:var(--s2)}
-.ledger.big .lrow,.lrow{grid-template-columns:1fr auto;}.lrow .st{display:none}.ideasym{flex-wrap:wrap}.avrow3{grid-template-columns:repeat(3,1fr)}.trpair{max-width:none}
+.ledger.big .lrow,.lrow{grid-template-columns:1fr auto;}.lrow .st{display:none}.lrow>span:empty{display:none}.ideasym{flex-wrap:wrap}.avrow3{grid-template-columns:repeat(3,1fr)}.trpair{max-width:none}
 .misuse,.motifs{grid-template-columns:1fr}
 .sum-a .mk,.cell .mk,.inuse .mk{width:100%!important;max-width:280px}.logorow{grid-template-columns:1fr!important}.typepage p.tspec{font-size:52px}.tmono{flex-wrap:wrap}.typepage p.tq{font-size:22px}.min th:last-child,.min td:last-child{display:none}
 .stmap th:nth-child(3),.stmap td:nth-child(3){display:none}.adact{flex-wrap:wrap}.adm .m{overflow-wrap:anywhere}.adtitle{font-size:22px}.adcard{min-width:0}}
@@ -400,6 +400,12 @@ pre,.dcode,.ccard{--hc:#5B6A60;--hs:#74476A;--ha:#3D5876;--ht:#17392D}
 .tipsw{flex:none;width:32px;height:32px;border-radius:var(--r);box-shadow:inset 0 0 0 1px var(--line)}
 .tip .tn{font:600 16px/1.2 var(--serif)}.tip .td{margin-top:var(--s1);color:var(--mute)}
 .tip .tv{margin-top:var(--s2);font:400 12px/1.4 var(--mono)}.tip .th{margin-top:var(--s2);font:600 11px/1.2 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+/* Touch (no hover): a tap on a color name opens the panel; a dotted underline in running text says it can be tapped (not in the color headings); the panel carries a 44 px Copy button. */
+@media (hover:none),(pointer:coarse){.cn{cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.cn:not(.cname .cn){text-decoration:underline dotted;text-decoration-thickness:1px;text-underline-offset:3px}
+.cn:focus-visible{outline:2px solid var(--fg);outline-offset:2px;border-radius:2px}
+.tip.touch{pointer-events:auto;max-width:min(320px,calc(100vw - 16px))}
+.tip .tcopy{display:block;width:100%;min-height:44px;margin-top:var(--s3);padding:0 var(--s3);background:none;color:var(--fg);border:1px solid var(--line);border-radius:var(--r);font:600 13px/1.2 var(--sans);letter-spacing:0;text-transform:none;text-align:center;cursor:pointer;touch-action:manipulation}}
 @media print{.tip,.sr-only{display:none!important}}
 .termspage .fine,.pspage .prules li{max-width:none}
 .illfig{margin-top:var(--s4)}.illfig figcaption{font-size:13px;color:var(--mute)}.illh{font-size:44px}.illfig .crule.title{margin:var(--s2) 0 var(--s3)}.illfig .diag{margin:0 0 var(--s2)}
@@ -820,8 +826,12 @@ const STING_DRIVER = ({ val }) => {
 //       so nothing moves.
 //  .cn  a color name in text (engine/names.mjs): on hover, a small panel with the color's swatch, name, description,
 //       hex and RGB, read from COLORDATA (the brand's palette; absent means no panel). Click copies the hex.
+//       On a touch screen (no hover) a tap opens the same panel and the panel has a Copy button; a second tap on the name,
+//       a tap anywhere else, a scroll or Esc closes it. Names show a dotted underline there so the tap is discoverable.
 (() => {
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const touch = !fine && typeof COLORDATA !== 'undefined';
+  const LABEL = touch ? 'Copy hex code' : 'Click to copy the hex code';
   const live = document.createElement('div');
   live.className = 'sr-only'; live.setAttribute('aria-live', 'polite'); live.setAttribute('data-md-skip', '');
   document.body.append(live);
@@ -847,13 +857,14 @@ const STING_DRIVER = ({ val }) => {
     return { hex, desc, rgb: rgbOf(hex) };
   };
   // ── the panel
-  let tip, cur = null, timer = 0;
+  let tip, cur = null, timer = 0, y0 = 0;
   const build = () => {
     tip = document.createElement('div'); tip.className = 'tip'; tip.setAttribute('role', 'tooltip'); tip.setAttribute('data-md-skip', ''); tip.hidden = true;
-    tip.innerHTML = '<i class="tipsw"></i><div><p class="tn"></p><p class="td"></p><p class="tv"><span class="th1"></span> <span class="th2"></span></p><p class="th"></p></div>';
+    tip.innerHTML = `<i class="tipsw"></i><div><p class="tn"></p><p class="td"></p><p class="tv"><span class="th1"></span> <span class="th2"></span></p>${touch ? '<button type="button" class="th tcopy"></button>' : '<p class="th"></p>'}</div>`;
+    if (touch) { tip.classList.add('touch'); tip.setAttribute('role', 'dialog'); }
     document.body.append(tip);
   };
-  const hide = () => { clearTimeout(timer); cur = null; if (tip) tip.hidden = true; };
+  const hide = () => { clearTimeout(timer); if (cur && touch) cur.setAttribute('aria-expanded', 'false'); cur = null; if (tip) tip.hidden = true; };
   const show = (el, ev) => {
     const e = entry(el.dataset.cn, el); if (!e) return;
     if (!tip) build();
@@ -864,12 +875,13 @@ const STING_DRIVER = ({ val }) => {
     tip.querySelector('.td').textContent = e.desc;
     tip.querySelector('.th1').textContent = e.hex;
     tip.querySelector('.th2').textContent = `rgb(${e.rgb.join(', ')})`;
-    tip.querySelector('.th').textContent = 'Click to copy the hex code';
+    tip.querySelector('.th').textContent = LABEL; if (touch) tip.setAttribute('aria-label', el.dataset.cn);
     tip.hidden = false; tip.style.left = '0px'; tip.style.top = '0px';
     const rects = [...el.getClientRects()], r = rects.find((q) => ev && ev.clientY >= q.top && ev.clientY <= q.bottom) || rects[0];
     const w = tip.offsetWidth, h = tip.offsetHeight;
     let top = r.bottom + 8; if (top + h > innerHeight - 8) top = Math.max(8, r.top - h - 8);
     tip.style.left = `${Math.min(Math.max(8, r.left), innerWidth - w - 8)}px`; tip.style.top = `${top}px`;
+    if (touch) { cur = el; y0 = scrollY; el.setAttribute('aria-expanded', 'true'); }
   };
   if (hasData && fine) {
     document.addEventListener('pointerover', (ev) => {
@@ -884,17 +896,35 @@ const STING_DRIVER = ({ val }) => {
     addEventListener('blur', hide);
     document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') hide(); });
   }
+  if (touch) {
+    document.querySelectorAll('.cn').forEach((n) => { n.setAttribute('role', 'button'); n.tabIndex = 0; n.setAttribute('aria-expanded', 'false'); });
+    // A small scroll (the browser bar resizing) keeps the panel; a real scroll closes it, since it is placed against the viewport.
+    addEventListener('scroll', (ev) => { if (cur && (ev.target !== document || Math.abs(scrollY - y0) > 24)) hide(); }, { capture: true, passive: true });
+    addEventListener('resize', hide); addEventListener('orientationchange', hide);
+    document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape') hide(); });
+    document.addEventListener('keydown', (ev) => { const n = ev.target.closest?.('.cn'); if (n && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); cur === n ? hide() : show(n); } });
+  }
   // ── copying
   const selecting = () => { const s = getSelection(); return s && !s.isCollapsed && s.toString().trim().length > 0; };
   const copyEl = async (el) => {
     let text;
     if (el.classList.contains('cp')) text = el.dataset.copy;
-    else if (hasData && fine && el.classList.contains('cn')) { const e = entry(el.dataset.cn, el); text = e?.hex; }
+    else if (hasData && el.classList.contains('cn')) { const e = entry(el.dataset.cn, el); text = e?.hex; }
     if (!text || !(await copy(text))) return;
     if (el.classList.contains('cp')) flash(el, text);
-    else if (tip && !tip.hidden) { const h = tip.querySelector('.th'); h.textContent = 'Copied'; clearTimeout(h._t); h._t = setTimeout(() => { h.textContent = 'Click to copy the hex code'; }, 1100); live.textContent = ''; setTimeout(() => { live.textContent = `Copied ${text}`; }, 30); }
+    else if (tip && !tip.hidden) { const h = tip.querySelector('.th'); h.textContent = 'Copied'; clearTimeout(h._t); h._t = setTimeout(() => { h.textContent = LABEL; }, 1100); live.textContent = ''; setTimeout(() => { live.textContent = `Copied ${text}`; }, 30); }
   };
-  document.addEventListener('click', (ev) => { const el = ev.target.closest?.('.cp, .cn'); if (el && !selecting()) copyEl(el); });
+  document.addEventListener('click', (ev) => {
+    if (touch) {
+      const t = ev.target;
+      if (t.closest?.('.tcopy')) { if (cur) copyEl(cur); return; }
+      const n = t.closest?.('.cn');
+      if (n) { if (!selecting()) { cur === n ? hide() : show(n, ev); } return; }
+      if (t.closest?.('.tip')) return;
+      hide();
+    }
+    const el = ev.target.closest?.('.cp, .cn'); if (el && !selecting() && !(touch && el.classList.contains('cn'))) copyEl(el);
+  });
   document.addEventListener('keydown', (ev) => { const el = ev.target.closest?.('.cp'); if (el && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); copyEl(el); } });
 })();
 </script></body></html>
