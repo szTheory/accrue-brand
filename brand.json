@@ -11,6 +11,7 @@
     }
   ],
   "idea": {
+    "line": "Accrue puts the double line of a final total under its name.",
     "explanation": [
       "On invoices, statements and spreadsheets, a double line under a number means it is the final total. Nothing below it changes.",
       "Accrue’s job is to know which charges, refunds and invoices are final. A refund you requested is not final; a refund Stripe has confirmed is. So the logo puts that double line under the name. In the docs, in Accrue Admin and on invoices, the same line marks what is final. No other billing or payments brand uses it."
