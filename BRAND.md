@@ -790,7 +790,7 @@ Stripe and Braintree IDs and webhook event IDs in IBM Plex Mono, on Folio, selec
 
 Never truncate an ID without a way to copy it whole.
 
-Shape: small, soft corners (a 6 px radius), flat surfaces and hairlines instead of shadows. These are Accrue’s own values for radius and elevation; a host app can override them in Accrue Admin’s theme. The header shows one name, never two: Accrue with “Admin”, or the host app’s own once white-labeled.
+Shape: small, soft corners (a 6 px radius), flat surfaces and hairlines instead of shadows. These are Accrue’s own values for radius and elevation; a host app can override them in Accrue Admin’s theme. The header shows one name, never two: the Accrue lockup alone, or the host app’s own once white-labeled.
 
 ## In the product: type and neutrals
 
