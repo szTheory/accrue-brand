@@ -1,6 +1,6 @@
 # Accrue assets: which file to use
 
-Open `index.html` in a browser for previews. Version 2.0, 30 October 2026.
+Open `index.html` in a browser for previews. Version 2.1, 2 November 2026.
 
 ## HexDocs, the README, documents and slides on a light background
 
@@ -65,6 +65,7 @@ Open `index.html` in a browser for previews. Version 2.0, 30 October 2026.
 - `sound/accrue-confirm.wav`
 - `sound/listening/accrue-close.mp3`
 - `sound/listening/accrue-confirm.mp3`
+- `sound/README.md`
 
 ## The logo animation with its sound, for videos and talks
 
@@ -98,4 +99,4 @@ Open `index.html` in a browser for previews. Version 2.0, 30 October 2026.
 - `../accrue-one-page.pdf`
 - `index.html`
 
-All logo SVGs are transparent, outlined (no fonts needed) and use the exact brand colors. `-light` files are colored for a light background, `-dark` for a dark one. The symbol is drawn separately for 16, 24, 32, 48 and 64 px: use the file for the size you need, at exactly that size, and the plain symbol file above 64 px. `accrue.ico` holds 16 to 256 px. Avatars are square: platforms crop them to circles themselves. Sounds: 48 kHz mono WAV, Close at -20 LUFS and Confirm at -23 LUFS (integrated, ITU-R BS.1770). Fonts: SIL Open Font License 1.1 (see `fonts/OFL-*.txt`); `variable/` holds every weight in one file, `static/` one file per named weight (IBM Plex Mono ships as static files only), `web/` Latin WOFF2 subsets with a `fonts.css`.
+All logo SVGs are transparent, outlined (no fonts needed) and use the exact brand colors. `-light` files are colored for a light background, `-dark` for a dark one. The symbol is drawn separately for 16, 24, 32, 48 and 64 px: use the file for the size you need, at exactly that size, and the plain symbol file above 64 px. `accrue.ico` holds 16 to 256 px. Avatars are square: platforms crop them to circles themselves. Sounds: 48 kHz mono WAV, Close at -32 LUFS and Confirm at -32 LUFS (integrated, ITU-R BS.1770). Fonts: SIL Open Font License 1.1 (see `fonts/OFL-*.txt`); `variable/` holds every weight in one file, `static/` one file per named weight (IBM Plex Mono ships as static files only), `web/` Latin WOFF2 subsets with a `fonts.css`.

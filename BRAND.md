@@ -1,6 +1,6 @@
 # Accrue brand
 
-Version 2.0, 30 October 2026. This is the complete text of the brand book (`accrue-brand-book.html`), page by page, for people and AI assistants. The same rules as structured data are in `brand.json`; colors, type and motion values in `tokens.json`; every file is explained in `assets/index.html`. Where the book shows something visually (the logo, colors, motion, sound), the files in `assets/` are the source.
+Version 2.1, 2 November 2026. This is the complete text of the brand book (`accrue-brand-book.html`), page by page, for people and AI assistants. The same rules as structured data are in `brand.json`; colors, type and motion values in `tokens.json`; every file is explained in `assets/index.html`. Where the book shows something visually (the logo, colors, motion, sound), the files in `assets/` are the source.
 
 ## Brand at a glance
 
@@ -560,9 +560,9 @@ These are only the terms the brand depends on; Accrue’s docs own the full glos
 **A word, then two strokes. Then still.**
 
 1. **0.00 s** The word fades in, without moving. Sound: silence.
-2. **0.24 s** The first line is drawn from the a’s left edge, slow at first, quickest in the middle, slowing into the e. Sound: one pen stroke, loudest where the pen is fastest.
-3. **0.66 s** A beat, then the second line, shorter in time and a touch quicker, as a hand’s second pass would be. Sound: a second stroke, shorter and quieter.
-4. **0.96 s** Rest: exactly the static logo. Sound: silence.
+2. **0.10 s** The first line is drawn from the a’s left edge: a quick start, a steady speed, a quick stop at the e. Sound: a felt-tip stroke, one pen-down.
+3. **0.42 s** A beat, then the second line, shorter in time and drawn the same way. Sound: a second stroke, shorter, the same level.
+4. **0.60 s** Rest: exactly the static logo. Sound: silence.
 
 ### Never
 
@@ -570,9 +570,9 @@ The line never wipes away, bounces, loops, overshoots the e or draws right to le
 
 ### Craft
 
-- **Slow in, slow out.** Each line starts slowly, is quickest in the middle and slows into its end, like a pen pulled along a ruler.
+- **Quick start, steady, quick stop.** Each line starts quickly, moves at a steady speed and stops quickly at its end, like a pen pulled along a ruler.
 - **Follow-through.** The second line is shorter in time than the first: the hand already knows the length.
-- **Timing.** A 40 ms beat between the lines, so they read as two strokes, not one thick one.
+- **Timing.** A 110 ms beat between the lines, so they read as two strokes, not one thick one.
 - **One focus at a time.** The word is readable before the pen moves, and never moves itself.
 
 ### In the docs and accrue admin
@@ -580,17 +580,17 @@ The line never wipes away, bounces, loops, overshoots the e or draws right to le
 - **Confirm.** In the docs and in Accrue Admin, the Paid mark draws in beside the word in 200 ms when a value becomes paid, refunded or active: for example, after someone clicks Retry payment and Stripe’s webhook turns the invoice from Pending to Paid. Pending has no mark that moves; nothing pulses while waiting.
 - **Reveal.** Panels and rows appear with an opacity fade of 150 ms or less. Nothing slides in from the side.
 
-**For developers:** `logo.close 960ms` to rest, `logo.pen-ease cubic-bezier(0.5, 0, 0.2, 1)` for each line and `confirm 200ms`, the only motion values in tokens.json. They describe the brand’s motion, not a UI spec; every keyframe is in brand.json, and the animation is in assets/motion as video.
+**For developers:** `logo.close 600ms` to rest, `logo.stroke-start cubic-bezier(0.3333, 0, 0.6667, 0.3333)` and `logo.stroke-stop cubic-bezier(0.3333, 0.6667, 0.6667, 1)` for the first 60 and last 50 ms of each line, and `confirm 200ms`, the only motion values in tokens.json. They describe the brand’s motion, not a UI spec; every keyframe is in brand.json, and the animation is in assets/motion as video.
 
 ## Sonic identity
 
 **Pen and paper.**
 
-When the double line is drawn, you hear it: a pen pulled along a ruler, then nothing. Quiet, short, and only where Accrue speaks for itself.
+When the double line is drawn, you hear it: a felt-tip drawing two steady lines, then nothing. Quiet, short, and only where Accrue speaks for itself.
 
-**Close**two pen strokes drawing the double line, the second shorter and quieter, loudest where the pen is fastest. Nothing at the end: the logo is simply there. **Confirm**one short stroke as a value becomes paid, for videos and talk demos.
+**Close**two felt-tip strokes drawing the double line, one pen-down per line, the second shorter. Nothing at the end: the logo is simply there. **Confirm**one short felt-tip stroke as a value becomes paid, for videos and talk demos.
 
-Each sound is two files in the assets folder. The MP3 (`assets/sound/listening/`) is the listening master, tuned for laptop speakers and headphones (loudness: Close −24 LUFS, Confirm −27 LUFS); this page and the logo video play it. The WAV (`assets/sound/`) is the raw synthesis (48 kHz, mono, Close −20 LUFS, Confirm −23 LUFS) for a sound designer, who can re-record it with a real pen and ruler without changing the idea.
+Each sound is two files in the assets folder. The MP3 (`assets/sound/listening/`) is the listening master, tuned for laptop speakers and headphones; this page and the logo video play it. These cues sit 12 dB below the general listening master (−24 LUFS), so a half-second cue stays far under speech and music: Close −36 LUFS, Confirm −36 LUFS. The WAV (`assets/sound/`) is the raw render (48 kHz, mono, Close −32 LUFS, Confirm −32 LUFS) for a sound designer, who can re-record it with a real pen without changing the idea. The source and its rights are in `assets/sound/README.md`.
 
 ### Where sound plays
 
@@ -601,11 +601,15 @@ Each sound is two files in the assets folder. The MP3 (`assets/sound/listening/`
 
 ### Character
 
-Pen and paper. A pen pulled along a ruler across good paper, dry and close, rising with the pen’s speed and gone the moment it lifts; then a second, shorter pass. No chime, no tap, no success sound: the line itself is the confirmation. Short and quiet, so it never startles anyone while they’re working.
+Pen and paper. A felt-tip drawing a steady line: quiet, close and low, one pen-down per line, the level steady rather than swelling, gone the moment the pen lifts; then a second, shorter line. No chime, no tap, no success sound: the line itself is the confirmation. Quiet enough that it never startles anyone while they’re working.
 
 ### In sync
 
-Sound and picture share one timeline. Each stroke sits on its line: it starts as the line starts, is loudest where the line draws fastest and stops where the line ends. The sound is scheduled first and the animation starts when it is heard, so speaker and Bluetooth delay never pull them apart; a stroke may land a touch late, never early.
+Sound and picture share one timeline. Each stroke sits on its line: it starts as the line starts and stops where the line ends, at a steady level while the line moves at a steady speed. The sound is scheduled first and the animation starts when it is heard, so speaker and Bluetooth delay never pull them apart; a stroke may land a touch late, never early.
+
+### Credit
+
+Sound source: “writing with feltpen” by stephan (2007), via PDSounds and Wikimedia Commons. Its public-domain status rests on the PDSounds claim as shown on Wikimedia Commons. Edited here: stretched, layered and mastered.
 
 ## Imagery: code and the product
 
@@ -905,7 +909,7 @@ Host apps never show Accrue to their customers, so there is no co-brand lockup. 
 | App tile: Hex, Livebook, GitHub, avatars | `icon/accrue-tile.svg` `icon/accrue-tile-1024.png` `icon/accrue-tile-512.png` `icon/accrue-tile-64.png` |
 | Browser tab, HexDocs favicon and home screen | `icon/favicon.svg` `icon/favicon-32.png` `icon/favicon-16.png` `icon/accrue.ico` `icon/apple-touch-icon-180.png` |
 | GitHub social preview and avatars | `social/accrue-social-preview-1280x640.png` `social/accrue-avatar-1024.png` |
-| Sounds: raw WAVs for sound designers; MP3s mastered for speakers, for the web and videos | `sound/` `sound/listening/` |
+| Sounds: raw WAVs for sound designers; MP3s mastered for speakers, for the web and videos | `sound/` `sound/listening/` `sound/README.md` |
 | The logo animation with its sound, for videos and talks | `motion/accrue-logo-animation.mp4` `motion/accrue-logo-animation.webm` |
 | The photo grade (a LUT) and the example photos, with licenses | `imagery/accrue-ledger-daylight.cube` `imagery/README.md` |
 | Fonts for design apps (install) and the web | `fonts/variable/` `fonts/static/` `fonts/web/` |
@@ -913,7 +917,7 @@ Host apps never show Accrue to their customers, so there is no co-brand lockup. 
 | The whole brand as data, or as text for an AI assistant | `../brand.json` `../BRAND.md` |
 | This book to print or send, a one-page summary, and a visual guide to every file | `../accrue-brand-book.pdf` `../accrue-one-page.pdf` `index.html` |
 
-### Retired with version 2.0
+### Retired with version 2.1
 
 - **The four-step stair mark, its favicons and the subtitle lockup.** Replace with the lockup, symbol and icon files in this folder.
 - **The name set in Geist Regular as a logo.** Use the lockup files. In running text the name is plain text in the surrounding font.
@@ -941,6 +945,8 @@ Host apps never show Accrue to their customers, so there is no co-brand lockup. 
 
 ### Revision history
 
+**Version 2.1**, 2 November 2026. The logo sound is a quiet, close felt-tip recording, drawn with a steady ruled stroke; the confirm sound follows it, at a lower cue level. Color names open on a tap on phones, every page carries the browser-tab icon, and the invoice total on the idea page lines up on phones.
+
 **Version 2.0**, 30 October 2026. A new identity: the lowercase Besley wordmark with a bookkeeper’s double line under it, the ledger palette with its paid and pending colors, Besley, Public Sans and IBM Plex Mono, voice, motion, sound, imagery, the brand’s place inside host applications and the files to use it all.
 
 ## To review
@@ -958,7 +964,7 @@ Host apps never show Accrue to their customers, so there is no co-brand lockup. 
 9. **Accrue Admin’s default brand.** Accrue’s own brand by default (the lockup alone in the header, Ledger Green actions). The host app’s name, logo and accent replace it only when white-labeled, never both. Nothing is set beside the logo: “Admin” would add nothing. The product has to build the default and the switch.
 10. **The tagline and the voice principles.** “Paid means paid.” replaces June 2026’s “Billing state, modeled clearly.”; the voice principles (measured, exact, native, durable) carry over.
 11. **Light as the default background.** Ledger Paper for docs, the README and Accrue Admin; Ledger Green for the cover, talks, the social card and dark mode.
-12. **Motion values.** A one-second close: the word in 180 ms, the lines drawn 240 to 620 and 660 to 960 ms; a 200 ms Paid mark.
+12. **Motion values.** A 0.6-second close: the word in 120 ms, the lines drawn 100 to 310 and 420 to 600 ms; a 200 ms Paid mark.
 13. **Example photographs.** Free-licensed stock, graded with the brand LUT, until the project’s own replace them.
 14. **No website grid in the book.** A website build guide sets its own grid within the layout principles.
 

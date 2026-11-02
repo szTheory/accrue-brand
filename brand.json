@@ -1,9 +1,14 @@
 {
-  "about": "Accrue brand data, version 2.0. Every rule in the brand book as structured data; American English.",
+  "about": "Accrue brand data, version 2.1. Every rule in the brand book as structured data; American English.",
   "name": "Accrue",
-  "version": "2.0",
-  "date": "30 October 2026",
+  "version": "2.1",
+  "date": "2 November 2026",
   "revisions": [
+    {
+      "version": "2.1",
+      "date": "2 November 2026",
+      "changes": "The logo sound is a quiet, close felt-tip recording, drawn with a steady ruled stroke; the confirm sound follows it, at a lower cue level. Color names open on a tap on phones, every page carries the browser-tab icon, and the invoice total on the idea page lines up on phones."
+    },
     {
       "version": "2.0",
       "date": "30 October 2026",
@@ -740,20 +745,26 @@
   },
   "motion": {
     "rule1": [
-      240,
-      620
+      100,
+      310
     ],
     "rule2": [
-      660,
-      960
+      420,
+      600
     ],
-    "rest": 960,
-    "total": 1000,
+    "rest": 600,
+    "total": 640,
     "ease": {
-      "pen": [
-        0.5,
+      "strokeStart": [
+        0.3333333333333333,
         0,
-        0.2,
+        0.6666666666666666,
+        0.3333333333333333
+      ],
+      "strokeStop": [
+        0.3333333333333333,
+        0.6666666666666666,
+        0.6666666666666666,
         1
       ],
       "enter": [
@@ -770,7 +781,7 @@
           0
         ],
         [
-          180,
+          120,
           1,
           [
             0.2,
@@ -786,16 +797,30 @@
           0
         ],
         [
-          240,
+          100,
           0
         ],
         [
-          620,
+          160,
+          0.193548,
+          [
+            0.3333333333333333,
+            0,
+            0.6666666666666666,
+            0.3333333333333333
+          ]
+        ],
+        [
+          260,
+          0.83871
+        ],
+        [
+          310,
           1,
           [
-            0.5,
-            0,
-            0.2,
+            0.3333333333333333,
+            0.6666666666666666,
+            0.6666666666666666,
             1
           ]
         ]
@@ -806,29 +831,41 @@
           0
         ],
         [
-          660,
+          420,
           0
         ],
         [
-          960,
+          480,
+          0.24,
+          [
+            0.3333333333333333,
+            0,
+            0.6666666666666666,
+            0.3333333333333333
+          ]
+        ],
+        [
+          550,
+          0.8
+        ],
+        [
+          600,
           1,
           [
-            0.5,
-            0,
-            0.2,
+            0.3333333333333333,
+            0.6666666666666666,
+            0.6666666666666666,
             1
           ]
         ]
       ]
     },
     "confirm": {
-      "ms": 200,
-      "ease": [
-        0.5,
-        0,
-        0.2,
-        1
-      ]
+      "ms": 200
+    },
+    "strokeTiming": {
+      "startMs": 60,
+      "stopMs": 50
     },
     "trackFormat": "[ms, value, cubic-bezier easing into this key]; rule1 and rule2 are the drawn length (0 to 1) from the a’s left edge; wordOpacity 0 to 1",
     "keyframes": [
@@ -838,25 +875,25 @@
         "sound": "silence"
       },
       {
-        "ms": 240,
-        "picture": "The first line is drawn from the a’s left edge, slow at first, quickest in the middle, slowing into the e",
-        "sound": "one pen stroke, loudest where the pen is fastest"
+        "ms": 100,
+        "picture": "The first line is drawn from the a’s left edge: a quick start, a steady speed, a quick stop at the e",
+        "sound": "a felt-tip stroke, one pen-down"
       },
       {
-        "ms": 660,
-        "picture": "A beat, then the second line, shorter in time and a touch quicker, as a hand’s second pass would be",
-        "sound": "a second stroke, shorter and quieter"
+        "ms": 420,
+        "picture": "A beat, then the second line, shorter in time and drawn the same way",
+        "sound": "a second stroke, shorter, the same level"
       },
       {
-        "ms": 960,
+        "ms": 600,
         "picture": "Rest: exactly the static logo",
         "sound": "silence"
       }
     ],
     "craft": [
       {
-        "principle": "Slow in, slow out.",
-        "how": "Each line starts slowly, is quickest in the middle and slows into its end, like a pen pulled along a ruler."
+        "principle": "Quick start, steady, quick stop.",
+        "how": "Each line starts quickly, moves at a steady speed and stops quickly at its end, like a pen pulled along a ruler."
       },
       {
         "principle": "Follow-through.",
@@ -864,7 +901,7 @@
       },
       {
         "principle": "Timing.",
-        "how": "A 40 ms beat between the lines, so they read as two strokes, not one thick one."
+        "how": "A 110 ms beat between the lines, so they read as two strokes, not one thick one."
       },
       {
         "principle": "One focus at a time.",
@@ -894,27 +931,27 @@
   "sound": {
     "sounds": {
       "close": {
-        "description": "Close: two pen strokes drawing the double line, the second shorter and quieter, loudest where the pen is fastest. Nothing at the end: the logo is simply there.",
+        "description": "Close: two felt-tip strokes drawing the double line, one pen-down per line, the second shorter. Nothing at the end: the logo is simply there.",
         "file": "assets/sound/accrue-close.wav",
-        "lufs": -20,
-        "peakDbfs": -2.3,
-        "seconds": 1.07,
+        "lufs": -32,
+        "peakDbfs": -17.6,
+        "seconds": 0.9,
         "listening": {
           "file": "assets/sound/listening/accrue-close.mp3",
-          "lufs": -24,
-          "truePeak": -6.1
+          "lufs": -36,
+          "truePeak": -20.1
         }
       },
       "confirm": {
-        "description": "Confirm: one short stroke as a value becomes paid, for videos and talk demos.",
+        "description": "Confirm: one short felt-tip stroke as a value becomes paid, for videos and talk demos.",
         "file": "assets/sound/accrue-confirm.wav",
-        "lufs": -23,
-        "peakDbfs": -6.5,
-        "seconds": 0.45,
+        "lufs": -32,
+        "peakDbfs": -16.1,
+        "seconds": 0.9,
         "listening": {
           "file": "assets/sound/listening/accrue-confirm.mp3",
-          "lufs": -27,
-          "truePeak": -10.8
+          "lufs": -36,
+          "truePeak": -18.4
         }
       }
     },
@@ -936,7 +973,7 @@
         "rule": "for errors, never on page load, never in emails."
       }
     ],
-    "character": "Pen and paper. A pen pulled along a ruler across good paper, dry and close, rising with the pen’s speed and gone the moment it lifts; then a second, shorter pass. No chime, no tap, no success sound: the line itself is the confirmation. Short and quiet, so it never startles anyone while they’re working.",
+    "character": "Pen and paper. A felt-tip drawing a steady line: quiet, close and low, one pen-down per line, the level steady rather than swelling, gone the moment the pen lifts; then a second, shorter line. No chime, no tap, no success sound: the line itself is the confirmation. Quiet enough that it never startles anyone while they’re working.",
     "listeningMaster": {
       "chain": [
         {
@@ -957,9 +994,26 @@
         }
       ],
       "truePeakCeiling": -1,
-      "mp3": "320k"
+      "mp3": "320k",
+      "generalListeningLufs": -24,
+      "cueLufs": -36,
+      "cueNote": "The logo sounds are cues: their master sits 12 dB below the general listening master, because a 0.5 s cue should sit far below speech and music."
     },
-    "sync": "Sound and picture share one timeline. Each stroke sits on its line: it starts as the line starts, is loudest where the line draws fastest and stops where the line ends. The sound is scheduled first and the animation starts when it is heard, so speaker and Bluetooth delay never pull them apart; a stroke may land a touch late, never early.",
+    "source": {
+      "title": "“writing with feltpen”",
+      "author": "stephan",
+      "year": 2007,
+      "via": "PDSounds (pdsounds.org) and Wikimedia Commons",
+      "license": "Public domain, as claimed by PDSounds and shown on Wikimedia Commons",
+      "file": "sound/felt-tip-source.ogg",
+      "page": "https://commons.wikimedia.org/wiki/File:Writing_with_feltpen.ogg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Writing_with_feltpen.ogg",
+      "sha256": "3163760a842a097ec973cdf7d02b4dbfc551517e2bcc48840577384d50f21ab9",
+      "retrieved": "2026-11-01",
+      "done": "Two short runs of friction were cut from the recording, slowed to about 1.6 times their length, shaped to the ruled strokes, layered with a soft pen-down and a quiet desk tone, passed through a gentle compressor and the book’s small dry room, then mastered.",
+      "credit": "Sound source: “writing with feltpen” by stephan (2007), via PDSounds and Wikimedia Commons. Its public-domain status rests on the PDSounds claim as shown on Wikimedia Commons. Edited here: stretched, layered and mastered."
+    },
+    "sync": "Sound and picture share one timeline. Each stroke sits on its line: it starts as the line starts and stops where the line ends, at a steady level while the line moves at a steady speed. The sound is scheduled first and the animation starts when it is heard, so speaker and Bluetooth delay never pull them apart; a stroke may land a touch late, never early.",
     "syncSource": "Audio–video sync tolerances: Recommendation ITU-R BT.1359-1 (1998), detectability about +45 ms (sound early) to −125 ms (sound late)."
   },
   "messaging": {
@@ -1526,7 +1580,7 @@
     },
     {
       "choice": "Motion values.",
-      "detail": "A one-second close: the word in 180 ms, the lines drawn 240 to 620 and 660 to 960 ms; a 200 ms Paid mark."
+      "detail": "A 0.6-second close: the word in 120 ms, the lines drawn 100 to 310 and 420 to 600 ms; a 200 ms Paid mark."
     },
     {
       "choice": "Example photographs.",
@@ -1671,7 +1725,8 @@
       "need": "Sounds: raw WAVs for sound designers; MP3s mastered for speakers, for the web and videos",
       "files": [
         "assets/sound/",
-        "assets/sound/listening/"
+        "assets/sound/listening/",
+        "assets/sound/README.md"
       ]
     },
     {
