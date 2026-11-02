@@ -1,0 +1,1721 @@
+{
+  "about": "Accrue brand data, version 2.0. Every rule in the brand book as structured data; American English.",
+  "name": "Accrue",
+  "version": "2.0",
+  "date": "30 October 2026",
+  "revisions": [
+    {
+      "version": "2.0",
+      "date": "30 October 2026",
+      "changes": "A new identity: the lowercase Besley wordmark with a bookkeeper’s double line under it, the ledger palette with its paid and pending colors, Besley, Public Sans and IBM Plex Mono, voice, motion, sound, imagery, the brand’s place inside host applications and the files to use it all."
+    }
+  ],
+  "idea": {
+    "explanation": [
+      "On invoices, statements and spreadsheets, a double line under a number means it is the final total. Nothing below it changes.",
+      "Accrue’s job is to know which charges, refunds and invoices are final. A refund you requested is not final; a refund Stripe has confirmed is. So the logo puts that double line under the name. In the docs, in Accrue Admin and on invoices, the same line marks what is final. No other billing or payments brand uses it."
+    ]
+  },
+  "positioning": "Open-source billing for Phoenix apps, kept in your own database. Nothing shows as paid until Stripe or Braintree says it is.",
+  "job": "Give my Phoenix app billing I can trust, and let me see exactly what is known and what is still pending.",
+  "audience": [
+    {
+      "who": "Elixir and Phoenix developers",
+      "job": "When I add billing to my Phoenix app, I want subscriptions and payments in my own database, so my app always knows which customers have paid.",
+      "needs": "Billing that fits a normal Phoenix app, setup in a few Mix commands, and a way to test the whole flow without real payments."
+    },
+    {
+      "who": "Evaluators on Hex and HexDocs",
+      "job": "When I compare billing libraries, I want one that’s easy to start with and safe to depend on for years, so I can commit to it with confidence.",
+      "needs": "Easy setup, a realistic demo, flexibility for how they bill, and signs of a healthy open-source project."
+    },
+    {
+      "who": "Support and billing staff",
+      "job": "When a customer asks about a charge, I want to see what happened to it, so I can answer without asking an engineer.",
+      "needs": "One place in Accrue Admin to look up a customer, see their plan and what they owe, and fix the problem."
+    },
+    {
+      "who": "The host app’s customers",
+      "job": "When I go to pay my invoice, I want it to look like the company I signed up with, so I know it’s genuine.",
+      "needs": "The company’s own brand on every email, invoice and billing page, with no mention of Accrue."
+    }
+  ],
+  "values": [
+    {
+      "value": "Measured",
+      "meaning": "Say what Accrue does (“verifies every webhook signature”), not how great it is (“bank-grade”)."
+    },
+    {
+      "value": "Exact",
+      "meaning": "Use the real names: the actual module, the actual version, `Accrue.Billing.subscribe/3` rather than “the API”."
+    },
+    {
+      "value": "Native",
+      "meaning": "Speak Elixir: Ecto schemas, contexts, plugs and Mix tasks, used the way Phoenix developers use them."
+    },
+    {
+      "value": "Honest",
+      "meaning": "Pending is not paid. When Accrue doesn’t know, it says so instead of guessing."
+    },
+    {
+      "value": "Durable",
+      "meaning": "Words and design that still hold up in five years: no trends, no dated slang."
+    }
+  ],
+  "rules": [
+    "The name is never shown without its double line.",
+    "Green means paid, brass means pending, always with the status word.",
+    "Say what it does, not how good it is."
+  ],
+  "presence": {
+    "head": "Accrue lives inside the apps that use it. The brand knows when to be quiet.",
+    "tiers": [
+      {
+        "tier": "Full brand",
+        "where": "Accrue’s own surfaces",
+        "who": "The README and the GitHub repository, HexDocs, Hex.pm, the social card, release posts, talks, stickers and the tee.",
+        "whatShows": "The lockup on light and dark, Besley headlines (the brand’s serif), the double line under titles and totals, the logo sound after a click."
+      },
+      {
+        "tier": "In the background",
+        "where": "Accrue Admin, in the host app",
+        "who": "Support and billing staff, and engineers, investigating billing inside the host app, at a path the host app chooses.",
+        "whatShows": "Accrue’s own look by default: the Accrue lockup in the header, its type, background and status colors, Ledger Green for actions. A host app that white-labels it puts its own name or logo in the header instead and sets its own accent color (`:admin_branding`). No sound."
+      },
+      {
+        "tier": "Host brand only",
+        "where": "Portal, emails and invoices",
+        "who": "The host app’s own customers, who are subscribing, paying and reading invoices.",
+        "whatShows": "Accrue designs the templates; the host app’s own name, logo, accent color and font fill them, from its branding settings (`config :accrue, :branding`). The Accrue name and logo never appear."
+      }
+    ],
+    "note": "The host app’s customers have a relationship with the host app, not with a library. Showing them Accrue’s name or logo would be noise at best and a support question at worst."
+  },
+  "logo": {
+    "wordmark": "accrue, lowercase, in Besley SemiBold (weight 600) with no extra letter spacing, converted to outlines (drawn shapes, not live text). It is a drawing: never typed in the font.",
+    "rule": "The double line is drawn from the letters: each bar is 100 font units thick (the font’s em is 2,000), the weight of Besley’s thinnest horizontal stroke (the top of the a’s bowl), so it reads as part of the type and not as an underline. The bars are 68 units apart and the first sits 120 units under the baseline; “accrue” has no descenders, so the line can sit close. It runs exactly from the a’s left edge to the e’s right edge.",
+    "together": "The word and the line are one logo. The line is never shown alone as the logo, and the word is never shown without it.",
+    "mono": "In one-color versions, the word and the line use the same color. They are separate pieces that never touch, so the line never has to break around a letter.",
+    "symbol": "The symbol is the a alone, with its own double line under it, as wide as the a. It is drawn for each size rather than scaled: at 16, 24, 32, 48 and 64 px the x-height, the baseline, the a’s stem and both lines sit on whole pixels, the a gets a little heavier as it gets smaller (weight 640 at 64 px, 700 at 16), and each line is the a’s thin stroke at that size, rounded to whole pixels.",
+    "icon": "The app tile is the symbol on Ledger Green: a Ledger Paper “a” over a double line in Mint Line. Each size has its own drawing, so even the 16 px favicon keeps two distinct 1-pixel lines: they blur only when a large drawing is scaled down, so we never scale one down.",
+    "iconMore": "We supply square files. GitHub, Hex and social sites crop avatars to circles and rounded squares themselves; the symbol is centered with room for their crop. Never draw the symbol inside a circle yourself.",
+    "wordAlone": "Where a logo can’t be placed, write Accrue as plain text.",
+    "clear": "Keep one x-height (the height of a lowercase x in the wordmark) of clear space on every side of the lockup: no text, page edges or other logos inside it. The line counts as part of the logo.",
+    "minNote": "Below 96 px wide each line would be thinner than 1.4 pixels and the two would start to merge; use the symbol instead. Below 64 px always use the symbol file drawn for that size. Print sizes assume offset or good digital printing; check engraving and embroidery with the supplier.",
+    "minimumSizes": [
+      {
+        "version": "Lockup",
+        "screen": "96 px wide",
+        "print": "25 mm wide"
+      },
+      {
+        "version": "Symbol, drawn for its size",
+        "screen": "16 px",
+        "print": "5 mm"
+      }
+    ],
+    "misuse": [
+      "Don’t use the word without the line.",
+      "Don’t make the line a single line or blue: it reads as a link.",
+      "Don’t change the line’s length.",
+      "Don’t put the line through or above the word.",
+      "Don’t stretch, slant or outline it.",
+      "Don’t lock a tagline to it.",
+      "Don’t put it in a box or badge.",
+      "Don’t set it on Line Green or coral."
+    ],
+    "geometry": {
+      "wordmark": "accrue, lowercase, Besley SemiBold (weight 600), outlined, optically spaced: every letter pair holds the same white area inside the x-height, 6% under the average of the font’s own spacing",
+      "spacing": "pair gaps (white area ÷ x-height, in units) a-c, c-c, c-r, r-u, u-e: font 310, 355, 368, 400, 340; lockup 333, 333, 333, 333, 333",
+      "xHeight": "1040u at 2000u to the em",
+      "rules": "two bars 100u thick, as thick as the a’s bowl bar (99u), 68u apart (0.68 of a bar); the top bar 120u (1.2 bars) under the baseline",
+      "ruleSpan": "from the a's left ink edge to the e's right ink edge: 6712.28u",
+      "symbol": "the a alone, drawn per size on whole pixels: weight 700 at 16 px, 680 at 24, 670 at 32, 650 at 48, 640 at 64 and above; each rule the a’s thin stroke at that size, rounded to whole pixels",
+      "cuts": {
+        "16px": "weight 700, x-height 9 px, baseline at 11 px, rules 1 px at 12 and 1 px at 14",
+        "24px": "weight 680, x-height 13 px, baseline at 16 px, rules 2 px at 17 and 2 px at 20",
+        "32px": "weight 670, x-height 17 px, baseline at 21 px, rules 2 px at 23 and 2 px at 26",
+        "48px": "weight 650, x-height 25 px, baseline at 31 px, rules 3 px at 34 and 3 px at 39",
+        "64px": "weight 640, x-height 34 px, baseline at 42 px, rules 4 px at 46 and 4 px at 53",
+        "128px": "weight 640, x-height 66 px, baseline at 84 px, rules 7 px at 91 and 7 px at 103"
+      },
+      "lockupAspect": 4.62
+    }
+  },
+  "color": {
+    "light": [
+      {
+        "name": "Ledger Paper",
+        "hex": "#F3EEDF",
+        "role": "The background: warm, never white. Pages, docs, the README banner.",
+        "sharePercent": 60
+      },
+      {
+        "name": "Ledger Green",
+        "hex": "#17392D",
+        "role": "The wordmark, all text, buttons and code. A deep bottle green, never black.",
+        "sharePercent": 22
+      },
+      {
+        "name": "Folio",
+        "hex": "#FBF8F0",
+        "role": "Raised surfaces: cards, code blocks, Accrue Admin’s panels.",
+        "sharePercent": 10
+      },
+      {
+        "name": "Line Green",
+        "hex": "#3F8A68",
+        "role": "The double line and graphics only. At 3.6:1 contrast, never small text.",
+        "sharePercent": 4
+      },
+      {
+        "name": "Column Line",
+        "hex": "#D8D0BC",
+        "role": "Hairlines and table lines: the lines of a ledger.",
+        "sharePercent": 4
+      }
+    ],
+    "dark": [
+      {
+        "name": "Ledger Green",
+        "hex": "#17392D",
+        "role": "The background in dark mode, on the cover, talks and the social card.",
+        "sharePercent": 62
+      },
+      {
+        "name": "Ledger Paper",
+        "hex": "#F3EEDF",
+        "role": "The wordmark and all text: 10.9:1.",
+        "sharePercent": 22
+      },
+      {
+        "name": "Felt",
+        "hex": "#1F4538",
+        "role": "Raised surfaces: cards, code blocks, the docs sidebar.",
+        "sharePercent": 10
+      },
+      {
+        "name": "Mint Line",
+        "hex": "#8FCBAA",
+        "role": "The double line, links and buttons on dark: 6.8:1.",
+        "sharePercent": 6
+      }
+    ],
+    "secondary": [
+      {
+        "name": "Pencil",
+        "hex": "#5B6A60",
+        "role": "Secondary text on Ledger Paper and Folio."
+      },
+      {
+        "name": "Sage",
+        "hex": "#A7BCAE",
+        "role": "Secondary text on Ledger Green and Felt."
+      }
+    ],
+    "status": [
+      {
+        "status": "Paid",
+        "lightHex": "#2E6B4E",
+        "darkHex": "#8FCBAA",
+        "meaning": "Done, in Stripe’s or Braintree’s own words: paid, refunded, active. Shown with the Paid mark, a small double line, beside the word. Paid Ink on light, Mint Line on dark."
+      },
+      {
+        "status": "Pending",
+        "lightHex": "#7D5A1F",
+        "darkHex": "#D1A24E",
+        "meaning": "A charge or refund sent to Stripe or Braintree that they haven’t confirmed yet, or a webhook received and not yet applied. Brass Ink on light, Brass on dark."
+      },
+      {
+        "status": "Failed",
+        "lightHex": "#A33A2C",
+        "darkHex": "#F0937F",
+        "meaning": "Refused or failed, by Stripe, Braintree or Accrue. Red Ink on light, a lighter red on dark. Bookkeepers’ red, used sparingly."
+      },
+      {
+        "status": "No update",
+        "lightHex": "#5B6A60",
+        "darkHex": "#A7BCAE",
+        "meaning": "Stripe hasn’t sent anything yet, or its last update is old. Pencil on light, Sage on dark, never green or red, because Accrue doesn’t guess."
+      }
+    ],
+    "statusNames": [
+      {
+        "name": "Paid Ink",
+        "hex": "#2E6B4E",
+        "role": "Paid text on light backgrounds: 5.4:1."
+      },
+      {
+        "name": "Brass Ink",
+        "hex": "#7D5A1F",
+        "role": "Pending text on light backgrounds: 5.4:1."
+      },
+      {
+        "name": "Brass",
+        "hex": "#D1A24E",
+        "role": "Pending on dark backgrounds: 5.4:1."
+      },
+      {
+        "name": "Red Ink",
+        "hex": "#A33A2C",
+        "role": "Failed on light backgrounds: 5.7:1."
+      },
+      {
+        "name": "Red Ink Light",
+        "hex": "#F0937F",
+        "role": "Failed on dark backgrounds: 5.5:1."
+      }
+    ],
+    "pairs": [
+      {
+        "text": "Ledger Green",
+        "textHex": "#17392D",
+        "ground": "Ledger Paper",
+        "groundHex": "#F3EEDF",
+        "contrast": 10.91,
+        "use": "Any text"
+      },
+      {
+        "text": "Pencil",
+        "textHex": "#5B6A60",
+        "ground": "Ledger Paper",
+        "groundHex": "#F3EEDF",
+        "contrast": 4.93,
+        "use": "Any text"
+      },
+      {
+        "text": "Ledger Paper",
+        "textHex": "#F3EEDF",
+        "ground": "Ledger Green",
+        "groundHex": "#17392D",
+        "contrast": 10.91,
+        "use": "Any text"
+      },
+      {
+        "text": "Ledger Green",
+        "textHex": "#17392D",
+        "ground": "Folio",
+        "groundHex": "#FBF8F0",
+        "contrast": 11.92,
+        "use": "Any text"
+      },
+      {
+        "text": "Paid Ink",
+        "textHex": "#2E6B4E",
+        "ground": "Ledger Paper",
+        "groundHex": "#F3EEDF",
+        "contrast": 5.44,
+        "use": "Any text"
+      },
+      {
+        "text": "Brass Ink",
+        "textHex": "#7D5A1F",
+        "ground": "Ledger Paper",
+        "groundHex": "#F3EEDF",
+        "contrast": 5.4,
+        "use": "Any text"
+      },
+      {
+        "text": "Red Ink",
+        "textHex": "#A33A2C",
+        "ground": "Ledger Paper",
+        "groundHex": "#F3EEDF",
+        "contrast": 5.66,
+        "use": "Any text"
+      },
+      {
+        "text": "Line Green",
+        "textHex": "#3F8A68",
+        "ground": "Ledger Paper",
+        "groundHex": "#F3EEDF",
+        "contrast": 3.59,
+        "use": "Large text (24 px+, or 19 px bold) and graphics only"
+      },
+      {
+        "text": "Ledger Paper",
+        "textHex": "#F3EEDF",
+        "ground": "Line Green",
+        "groundHex": "#3F8A68",
+        "contrast": 3.59,
+        "use": "Never for text: see the note",
+        "note": "Line Green is a line color. Ledger Paper text on it reaches only 3.6:1; buttons on light are Ledger Green."
+      },
+      {
+        "text": "Sage",
+        "textHex": "#A7BCAE",
+        "ground": "Ledger Green",
+        "groundHex": "#17392D",
+        "contrast": 6.3,
+        "use": "Any text"
+      },
+      {
+        "text": "Mint Line",
+        "textHex": "#8FCBAA",
+        "ground": "Ledger Green",
+        "groundHex": "#17392D",
+        "contrast": 6.8,
+        "use": "Any text"
+      },
+      {
+        "text": "Ledger Green",
+        "textHex": "#17392D",
+        "ground": "Mint Line",
+        "groundHex": "#8FCBAA",
+        "contrast": 6.8,
+        "use": "Any text"
+      },
+      {
+        "text": "Ledger Paper",
+        "textHex": "#F3EEDF",
+        "ground": "Felt",
+        "groundHex": "#1F4538",
+        "contrast": 9.21,
+        "use": "Any text"
+      },
+      {
+        "text": "Brass",
+        "textHex": "#D1A24E",
+        "ground": "Ledger Green",
+        "groundHex": "#17392D",
+        "contrast": 5.42,
+        "use": "Any text"
+      },
+      {
+        "text": "Red Ink Light",
+        "textHex": "#F0937F",
+        "ground": "Ledger Green",
+        "groundHex": "#17392D",
+        "contrast": 5.53,
+        "use": "Any text"
+      },
+      {
+        "text": "Mint Line",
+        "textHex": "#8FCBAA",
+        "ground": "Felt",
+        "groundHex": "#1F4538",
+        "contrast": 5.74,
+        "use": "Any text"
+      }
+    ],
+    "print": "Not specified: proof against a physical swatch; no CMYK or Pantone values are given."
+  },
+  "type": {
+    "display": {
+      "family": "Besley",
+      "weights": "600 for the name, headlines and titles; 400 italic for quotes and the voice line",
+      "short": "An 1845 Clarendon, the slab serif of ledgers and receipts. No billing library or Elixir project uses it.",
+      "css": "Besley, Georgia, 'Times New Roman', serif"
+    },
+    "text": {
+      "family": "Public Sans",
+      "weights": "400 for reading, 500 for leads, 600 for emphasis and labels",
+      "short": "The U.S. Web Design System’s open typeface: easy to read, with no voice of its own.",
+      "css": "'Public Sans', -apple-system, 'Segoe UI', Roboto, sans-serif"
+    },
+    "mono": {
+      "family": "IBM Plex Mono",
+      "weights": "400 for code, IDs and figures; 500 for a total",
+      "short": "Its figures line up in columns, as a ledger’s should.",
+      "css": "'IBM Plex Mono', ui-monospace, 'SF Mono', Consolas, monospace"
+    },
+    "product": "Accrue Admin uses Public Sans for its interface and IBM Plex Mono for amounts and IDs; titles in Besley. Customer-facing templates (emails, invoice PDFs) use the host app’s own fonts, from its branding settings (`config :accrue, :branding`).",
+    "license": "All three are under the SIL Open Font License 1.1: free for docs, the web, slides, print and merch. The fonts are in assets/fonts.",
+    "why": "Besley is a revival of the Clarendon that Robert Besley’s foundry registered in 1845: the bracketed slab serif of ledgers, receipts, tickets and printed forms. It carries the feeling of kept records without nostalgia, and no billing library, payment brand or Elixir project is set in it. Public Sans, the open typeface of the U.S. Web Design System, does the reading and the interface without a voice of its own. IBM Plex Mono sets code, identifiers and every figure that has to line up in a column.",
+    "hierarchy": [
+      {
+        "role": "Display",
+        "face": "display",
+        "weight": 600,
+        "sizePx": 72,
+        "lineHeight": 1,
+        "tracking": "−1.5%",
+        "sample": "Paid means paid.",
+        "use": "Covers, talk titles, the website hero"
+      },
+      {
+        "role": "Headline",
+        "face": "display",
+        "weight": 600,
+        "sizePx": 44,
+        "lineHeight": 1.1,
+        "tracking": "−1%",
+        "sample": "Webhooks, verified.",
+        "use": "Guide and section titles"
+      },
+      {
+        "role": "Title",
+        "face": "display",
+        "weight": 600,
+        "sizePx": 26,
+        "lineHeight": 1.25,
+        "tracking": "0",
+        "sample": "Payment recovery",
+        "use": "Module names in guides, card titles"
+      },
+      {
+        "role": "Quote",
+        "face": "displayItalic",
+        "weight": 400,
+        "sizePx": 24,
+        "lineHeight": 1.35,
+        "tracking": "0",
+        "sample": "Refund requested. Stripe hasn’t confirmed it yet.",
+        "use": "Pull quotes, the voice line"
+      },
+      {
+        "role": "Lead",
+        "face": "text",
+        "weight": 500,
+        "sizePx": 21,
+        "lineHeight": 1.45,
+        "tracking": "0",
+        "sample": "Your app owns `MyApp.Billing`; Accrue does the rest.",
+        "use": "The first line under a headline"
+      },
+      {
+        "role": "Text",
+        "face": "text",
+        "weight": 400,
+        "sizePx": 17,
+        "lineHeight": 1.6,
+        "tracking": "0",
+        "sample": "Every webhook is signature-verified before it touches your database.",
+        "use": "Guides, READMEs, release notes"
+      },
+      {
+        "role": "Emphasis",
+        "face": "text",
+        "weight": 600,
+        "sizePx": 17,
+        "lineHeight": 1.6,
+        "tracking": "0",
+        "sample": "Sending a charge to Stripe is not the same as getting paid.",
+        "use": "The phrase that matters most"
+      },
+      {
+        "role": "Label",
+        "face": "text",
+        "weight": 600,
+        "sizePx": 13,
+        "lineHeight": 1.2,
+        "tracking": "+8%, capitals",
+        "sample": "LAST WEBHOOK",
+        "use": "Table headers, section labels"
+      },
+      {
+        "role": "Code",
+        "face": "mono",
+        "weight": 400,
+        "sizePx": 15,
+        "lineHeight": 1.55,
+        "tracking": "0",
+        "sample": "mix accrue.install",
+        "use": "Code, commands, module names"
+      },
+      {
+        "role": "Figures",
+        "face": "mono",
+        "weight": 400,
+        "sizePx": 15,
+        "lineHeight": 1.5,
+        "tracking": "0",
+        "sample": "USD 1,248.00",
+        "use": "Amounts and IDs, right-aligned"
+      },
+      {
+        "role": "Caption",
+        "face": "text",
+        "weight": 400,
+        "sizePx": 14,
+        "lineHeight": 1.45,
+        "tracking": "0",
+        "sample": "Shown with the test payment processor and sample data.",
+        "use": "Figure notes, in Pencil or Sage"
+      }
+    ]
+  },
+  "retired": [
+    {
+      "what": "The four-step stair mark, its favicons and the subtitle lockup.",
+      "instead": "Replace with the lockup, symbol and icon files in this folder."
+    },
+    {
+      "what": "The name set in Geist Regular as a logo.",
+      "instead": "Use the lockup files. In running text the name is plain text in the surrounding font."
+    },
+    {
+      "what": "Cobalt #5D79F6 as the brand accent.",
+      "instead": "Ledger Green carries buttons and links; Mint Line on dark backgrounds."
+    },
+    {
+      "what": "Moss as both the brand color and the “paid” status.",
+      "instead": "Status colors mean status only: Paid, Pending, Failed."
+    },
+    {
+      "what": "brandbook/tokens (tokens.css, tokens.json, June 2026).",
+      "instead": "Use tokens.json from this folder; Accrue Admin’s theme takes its values from it."
+    }
+  ],
+  "layout": {
+    "head": "Lines, not boxes.",
+    "scope": "For what Accrue designs itself: the README, release posts, social images and slides. On HexDocs, ExDoc sets the page layout; Accrue adds the logo, the colors and code colors, and writes the guides. Accrue Admin follows the “In the product” pages; templates for host apps follow the host app’s brand.",
+    "principles": [
+      {
+        "principle": "Words left, figures right.",
+        "meaning": "As in a ledger: text aligns to one left edge, and amounts align right in IBM Plex Mono, so figures line up from top to bottom."
+      },
+      {
+        "principle": "Lines divide; boxes don’t.",
+        "meaning": "Sections and rows are separated by Column Line hairlines and space. Cards are for things you can act on, not for every paragraph."
+      },
+      {
+        "principle": "One closing line per surface.",
+        "meaning": "The double line goes under the one thing that is final: the page title, the total, the slide headline. Never two on a surface."
+      }
+    ],
+    "examples": [
+      {
+        "channel": "README or guide page",
+        "good": "One left edge; the title with the double line under it; code in Folio; the next step as plain text.",
+        "bad": "Centered title, every paragraph in its own card, a double line under each heading and a gradient banner."
+      },
+      {
+        "channel": "Conference talk slide",
+        "good": "The headline on the left with the double line under it; the lockup small at the foot; one idea per slide.",
+        "bad": "The line struck through the words, the logo huge, three bullet lists and a stock photo behind them."
+      }
+    ],
+    "notSpecified": "Not set by this book: a website grid or spacing scale (a website build guide is its own document), component states and form specifications (they live in Accrue Admin’s code), and a print grid."
+  },
+  "voice": {
+    "summary": "A careful bookkeeper explaining what happened, in order, with receipts.",
+    "toneDial": [
+      {
+        "channel": "Talks and social posts",
+        "lively0to4": 3,
+        "example": "Webhooks arrive out of order. Your invoices shouldn’t."
+      },
+      {
+        "channel": "README and the website",
+        "lively0to4": 2,
+        "example": "Paid means paid."
+      },
+      {
+        "channel": "Release notes",
+        "lively0to4": 2,
+        "example": "Webhook replay is safer: two concurrent replays can no longer dispatch the same delivery."
+      },
+      {
+        "channel": "Guides on HexDocs",
+        "lively0to4": 2,
+        "example": "Send one signed webhook with the test payment processor, then inspect it in Accrue Admin."
+      },
+      {
+        "channel": "API reference",
+        "lively0to4": 1,
+        "example": "Returns `{:error, :checkout_context_mismatch}` when the fetched session does not match."
+      },
+      {
+        "channel": "Accrue Admin",
+        "lively0to4": 1,
+        "example": "Retry scheduled. Waiting for Stripe."
+      },
+      {
+        "channel": "Errors and warnings",
+        "lively0to4": 0,
+        "example": "Refund not sent. The invoice is still a draft."
+      }
+    ],
+    "toneNote": "The voice never changes; the tone shifts with where the words appear. The closer a message is to money moving, the plainer its language.",
+    "thisNotThat": [
+      {
+        "say": "Every webhook is signature-verified before it touches your database.",
+        "notThis": "Bank-grade security."
+      },
+      {
+        "say": "Refund requested. Stripe hasn’t confirmed it yet.",
+        "notThis": "Refund processed!"
+      },
+      {
+        "say": "Pull requests are merge-blocked until `mix verify.full` passes.",
+        "notThis": "Extensively tested."
+      },
+      {
+        "say": "Retry scheduled. Waiting for Stripe.",
+        "notThis": "Payment fixed!"
+      },
+      {
+        "say": "Your app owns `MyApp.Billing`; Accrue handles the billing behind it.",
+        "notThis": "Accrue handles everything for you."
+      },
+      {
+        "say": "Pay and Laravel Cashier showed the way. Accrue brings it to Phoenix.",
+        "notThis": "The modern alternative to Pay."
+      },
+      {
+        "say": "Elixir 1.19+, Phoenix 1.8+.",
+        "notThis": "Works with the latest Elixir."
+      }
+    ],
+    "writingFor": [
+      "Write for support staff who don’t read code. Name the customer, the invoice or plan, and the next step; keep the module name and the ID for the engineer.",
+      "Never blame the paying customer. “The card was declined”, never “You failed to pay”.",
+      "Say who acted. Stripe, Braintree, Accrue or your app: each is a different actor, and the sentence names the right one.",
+      "Give amounts their currency and period. In Accrue Admin and the docs, “USD 588.00 per month”, never a bare 588. Customer-facing templates (Portal, invoices, emails) format money in the host app’s own locale and style, such as “$588.00/month”.",
+      "Leave out “just”, “simply” and “easy”. Integration has real steps; name them.",
+      "Use “they” for a person you don’t know."
+    ],
+    "name": {
+      "rule": "Accrue in running text, with a capital A. In code, packages and commands: accrue, accrue_admin, accrue_portal. The logo is lowercase; the name in a sentence is not.",
+      "never": [
+        {
+          "form": "ACCRUE",
+          "why": "except as a label in capitals"
+        },
+        {
+          "form": "accrue",
+          "why": "in running text"
+        },
+        {
+          "form": "Accrue.io, AccrueJS",
+          "why": "not our names"
+        },
+        {
+          "form": "the Accrue library’s",
+          "why": "say Accrue’s"
+        },
+        {
+          "form": "Accrue Billing",
+          "why": "there is no such product"
+        }
+      ],
+      "more": "Accrue ships two interfaces of its own: Accrue Admin, for the host app’s team, and Accrue Portal, where the host app’s customers manage their billing. Customers never see these names. Neither has a logo of its own: Accrue Admin’s header shows the Accrue lockup alone, or the host app’s brand when it white-labels Admin. Possessive: Accrue’s."
+    },
+    "words": [
+      {
+        "say": "subscriptions, invoices, payments",
+        "means": "The billing records Accrue keeps in your app’s database.",
+        "insteadOf": "billing state, billing data, stuff",
+        "why": "Name the thing itself: “the invoice failed”, not “billing state changed”."
+      },
+      {
+        "say": "payment processor",
+        "means": "The service that moves the money: Stripe or Braintree.",
+        "insteadOf": "payment provider, gateway",
+        "why": "The industry’s term. When you mean a specific one, name it: “Stripe sent a webhook”, not “the payment processor sent a webhook”."
+      },
+      {
+        "say": "pending / paid (refunded, active)",
+        "means": "Pending: Accrue has sent a charge or refund and is waiting for the payment processor to confirm it. Paid, refunded or active: the processor has confirmed it.",
+        "insteadOf": "observed, confirmed, processing",
+        "why": "These are the status words Stripe and Braintree use, so Accrue’s screens match what people see in those dashboards."
+      },
+      {
+        "say": "webhook delivery",
+        "means": "One message from Stripe or Braintree to your app about something that happened.",
+        "insteadOf": "callback, ping",
+        "why": "It’s what Accrue’s code and Accrue Admin call these messages."
+      },
+      {
+        "say": "test payment processor",
+        "means": "Accrue’s built-in stand-in for Stripe, for tests and demos; no money actually moves. `Accrue.Processor.Fake` in code.",
+        "insteadOf": "mock, sandbox, Fake processor",
+        "why": "The name says what it’s for: “the test payment processor”, not “the Fake”."
+      },
+      {
+        "say": "your billing module",
+        "means": "`MyApp.Billing`, the module Accrue generates in your app; your code calls it.",
+        "insteadOf": "wrapper, SDK, facade (outside architecture guides)",
+        "why": "“Facade” is fine in architecture guides."
+      },
+      {
+        "say": "host app",
+        "means": "The Phoenix app that uses Accrue.",
+        "insteadOf": "parent app, consumer, client",
+        "why": "Accrue lives inside it."
+      }
+    ],
+    "wordsNote": "These are only the terms the brand depends on; Accrue’s docs own the full glossary. Never write seamless, robust, powerful, bank-grade, production-grade, batteries-included, best-in-class or modern alternative. Say what Accrue does instead."
+  },
+  "motion": {
+    "rule1": [
+      240,
+      620
+    ],
+    "rule2": [
+      660,
+      960
+    ],
+    "rest": 960,
+    "total": 1000,
+    "ease": {
+      "pen": [
+        0.5,
+        0,
+        0.2,
+        1
+      ],
+      "enter": [
+        0.2,
+        0.7,
+        0.3,
+        1
+      ]
+    },
+    "tracks": {
+      "wordOpacity": [
+        [
+          0,
+          0
+        ],
+        [
+          180,
+          1,
+          [
+            0.2,
+            0.7,
+            0.3,
+            1
+          ]
+        ]
+      ],
+      "rule1": [
+        [
+          0,
+          0
+        ],
+        [
+          240,
+          0
+        ],
+        [
+          620,
+          1,
+          [
+            0.5,
+            0,
+            0.2,
+            1
+          ]
+        ]
+      ],
+      "rule2": [
+        [
+          0,
+          0
+        ],
+        [
+          660,
+          0
+        ],
+        [
+          960,
+          1,
+          [
+            0.5,
+            0,
+            0.2,
+            1
+          ]
+        ]
+      ]
+    },
+    "confirm": {
+      "ms": 200,
+      "ease": [
+        0.5,
+        0,
+        0.2,
+        1
+      ]
+    },
+    "trackFormat": "[ms, value, cubic-bezier easing into this key]; rule1 and rule2 are the drawn length (0 to 1) from the a’s left edge; wordOpacity 0 to 1",
+    "keyframes": [
+      {
+        "ms": 0,
+        "picture": "The word fades in, without moving",
+        "sound": "silence"
+      },
+      {
+        "ms": 240,
+        "picture": "The first line is drawn from the a’s left edge, slow at first, quickest in the middle, slowing into the e",
+        "sound": "one pen stroke, loudest where the pen is fastest"
+      },
+      {
+        "ms": 660,
+        "picture": "A beat, then the second line, shorter in time and a touch quicker, as a hand’s second pass would be",
+        "sound": "a second stroke, shorter and quieter"
+      },
+      {
+        "ms": 960,
+        "picture": "Rest: exactly the static logo",
+        "sound": "silence"
+      }
+    ],
+    "craft": [
+      {
+        "principle": "Slow in, slow out.",
+        "how": "Each line starts slowly, is quickest in the middle and slows into its end, like a pen pulled along a ruler."
+      },
+      {
+        "principle": "Follow-through.",
+        "how": "The second line is shorter in time than the first: the hand already knows the length."
+      },
+      {
+        "principle": "Timing.",
+        "how": "A 40 ms beat between the lines, so they read as two strokes, not one thick one."
+      },
+      {
+        "principle": "One focus at a time.",
+        "how": "The word is readable before the pen moves, and never moves itself."
+      }
+    ],
+    "movements": [
+      {
+        "name": "Close",
+        "description": "Once, when the logo first appears in a video, a talk or the website: the word, then the two lines drawn left to right. It is the only drawn motion in the brand."
+      },
+      {
+        "name": "Confirm",
+        "description": "In the docs and in Accrue Admin, the Paid mark draws in beside the word in 200 ms when a value becomes paid, refunded or active: for example, after someone clicks Retry payment and Stripe’s webhook turns the invoice from Pending to Paid. Pending has no mark that moves; nothing pulses while waiting."
+      },
+      {
+        "name": "Reveal",
+        "description": "Panels and rows appear with an opacity fade of 150 ms or less. Nothing slides in from the side."
+      }
+    ],
+    "never": "The line never wipes away, bounces, loops, overshoots the e or draws right to left; the word never moves. Amounts never count up or down. Pending states never pulse or spin. Reduced motion: the finished logo fades in, and the Paid mark appears without drawing.",
+    "video": [
+      "assets/motion/accrue-logo-animation.mp4",
+      "assets/motion/accrue-logo-animation.webm"
+    ]
+  },
+  "sound": {
+    "sounds": {
+      "close": {
+        "description": "Close: two pen strokes drawing the double line, the second shorter and quieter, loudest where the pen is fastest. Nothing at the end: the logo is simply there.",
+        "file": "assets/sound/accrue-close.wav",
+        "lufs": -20,
+        "peakDbfs": -2.3,
+        "seconds": 1.07,
+        "listening": {
+          "file": "assets/sound/listening/accrue-close.mp3",
+          "lufs": -24,
+          "truePeak": -6.1
+        }
+      },
+      "confirm": {
+        "description": "Confirm: one short stroke as a value becomes paid, for videos and talk demos.",
+        "file": "assets/sound/accrue-confirm.wav",
+        "lufs": -23,
+        "peakDbfs": -6.5,
+        "seconds": 0.45,
+        "listening": {
+          "file": "assets/sound/listening/accrue-confirm.mp3",
+          "lufs": -27,
+          "truePeak": -10.8
+        }
+      }
+    },
+    "rules": [
+      {
+        "when": "Video, talks and the website:",
+        "rule": "Close plays with the logo animation, and on the website only after a click."
+      },
+      {
+        "when": "Confirm",
+        "rule": "plays in videos and live talk demos when a value becomes paid."
+      },
+      {
+        "when": "Accrue Admin and Portal:",
+        "rule": "always silent. The Paid mark still draws, with no sound. Support teams work in shared offices and on calls, inside the host app."
+      },
+      {
+        "when": "Never",
+        "rule": "for errors, never on page load, never in emails."
+      }
+    ],
+    "character": "Pen and paper. A pen pulled along a ruler across good paper, dry and close, rising with the pen’s speed and gone the moment it lifts; then a second, shorter pass. No chime, no tap, no success sound: the line itself is the confirmation. Short and quiet, so it never startles anyone while they’re working.",
+    "listeningMaster": {
+      "chain": [
+        {
+          "what": "low-mid lift",
+          "ffmpeg": "equalizer=f=400:t=o:w=1.2:g=1.5"
+        },
+        {
+          "what": "presence dip",
+          "ffmpeg": "equalizer=f=3400:t=o:w=0.8:g=-2"
+        },
+        {
+          "what": "high shelf",
+          "ffmpeg": "highshelf=f=6000:t=q:w=0.7:g=-3"
+        },
+        {
+          "what": "nothing a laptop cannot carry",
+          "ffmpeg": "highpass=f=120:p=2"
+        }
+      ],
+      "truePeakCeiling": -1,
+      "mp3": "320k"
+    },
+    "sync": "Sound and picture share one timeline. Each stroke sits on its line: it starts as the line starts, is loudest where the line draws fastest and stops where the line ends. The sound is scheduled first and the animation starts when it is heard, so speaker and Bluetooth delay never pull them apart; a stroke may land a touch late, never early.",
+    "syncSource": "Audio–video sync tolerances: Recommendation ITU-R BT.1359-1 (1998), detectability about +45 ms (sound early) to −125 ms (sound late)."
+  },
+  "messaging": {
+    "tagline": "“Paid means paid.” leads where a reader is already on the page (the README, a talk, the website). Where a string is search-indexed or seen out of context (the GitHub description, Hex.pm, the social card), the descriptor leads and the tagline follows. It is never attached to the logo.",
+    "pitch": "Accrue is an open-source billing library for Elixir and Phoenix. It handles subscriptions, invoices, payments and webhooks inside your app, and comes with a ready-made admin dashboard.",
+    "pillars": [
+      [
+        "In your own database",
+        "Every verified webhook from Stripe or Braintree becomes a record in your own database."
+      ],
+      [
+        "Never “paid” before it’s paid",
+        "A charge sent to Stripe isn’t a payment yet. Accrue shows Pending until Stripe confirms it, and only then Paid."
+      ],
+      [
+        "Try it in minutes",
+        "Create a subscription with the test payment processor, send a signed webhook, see it in Accrue Admin, then run `mix verify`."
+      ]
+    ],
+    "boilerplate": [
+      [
+        "Descriptor (search and social)",
+        "The Elixir billing library for Phoenix apps."
+      ],
+      [
+        "Short (about 20 words)",
+        "Accrue is an open-source billing library for Elixir and Phoenix: subscriptions, invoices, payments, recovery and webhooks, kept in your own database."
+      ],
+      [
+        "Medium (about 45 words)",
+        "Accrue is an open-source billing library for Elixir and Phoenix. Your app keeps its own billing module, routes and auth; Accrue handles the rest: subscriptions, invoices and payments as Ecto schemas, signature-verified webhooks, a full event history, a ready-made admin dashboard and a white-labeled customer portal."
+      ],
+      [
+        "Long (about 85 words)",
+        "Accrue is an open-source billing library for Elixir and Phoenix. It keeps subscriptions, invoices, payments, refunds and each customer’s feature access (their entitlements) in your app’s own database, matching what Stripe or Braintree says. Your app keeps its own billing module (`MyApp.Billing`), routes, auth and config. Every webhook is signature-verified and stored, so you never lose a billing event and can always see how an invoice got to where it is. Your team gets a ready-made billing dashboard, and your customers get a billing portal white-labeled with your brand. MIT licensed."
+      ]
+    ]
+  },
+  "imagery": {
+    "product": {
+      "head": "Show the product: real code and Accrue Admin.",
+      "do": [
+        "Show real code that works with the current release (`{:accrue, \"~> 1.7.0\"}`), never pseudo-code.",
+        "Take every Accrue Admin screenshot from the demo app with the test payment processor, so each release can retake the same pictures.",
+        "Invented customers with plain, obviously fictional names (Acme Bakery, Riverside Dental) and invented amounts. Never a real customer, card or email address.",
+        "Light and dark versions of each, at 2× resolution, never upscaled."
+      ],
+      "dont": [
+        "No growth dashboards or tilted, glowing screens.",
+        "No mock-ups of features that don’t exist, and no claim that Braintree works exactly like Stripe unless it has been tested.",
+        "No tilted devices, glowing code or terminal art.",
+        "No dashboards of revenue going up: Accrue shows what happened to each payment, not growth."
+      ]
+    },
+    "marketing": {
+      "head": "Paper, hands and daylight.",
+      "where": "Photographs are rare: talk slides, blog posts and a future website. They set a scene of careful work; they are not pictures of billing.",
+      "photo": [
+        "Daylight and real surfaces: paper, desks, notebooks. Hands rather than faces.",
+        "Calm frames with room for a headline beside them.",
+        "Muted, natural color, so Ledger Green stays the strongest color on the page."
+      ],
+      "photoDont": [
+        "Coins, piggy banks, wallets and savings jars: the consumer-finance world.",
+        "Credit cards, phones with payment apps, tap-to-pay.",
+        "Growth charts, rising arrows, stairs and dollar signs.",
+        "Staged stock smiles and handshakes."
+      ],
+      "illustration": [
+        "Accrue has no illustration style beyond two things: the double line itself, and diagrams.",
+        "Diagrams: boxes and arrows in Ledger Green and Column Line on Ledger Paper, with Line Green on the one path that matters. Labels are in Public Sans, module names in IBM Plex Mono.",
+        "Status in diagrams uses the status colors and their words.",
+        "Icons: the host app’s or the platform’s own set in Accrue Admin; none on Accrue’s own pages."
+      ],
+      "illustrationDont": [
+        "Isometric servers, coins flowing through pipes, glowing data streams: generic infrastructure art.",
+        "The Elixir drop or the Phoenix bird recolored as Accrue’s: they belong to those projects.",
+        "A mascot or a character holding money: the consumer-app world."
+      ],
+      "frames": [
+        [
+          "Checked by hand",
+          "Daylight, close",
+          "A hand with a pen marking a printed sheet; hand only"
+        ],
+        [
+          "Where the work happens",
+          "Daylight from a window",
+          "An ordinary desk with a laptop, nothing legible on screen; no people, no logos"
+        ],
+        [
+          "Kept in order",
+          "Soft light",
+          "Ordered paper: cards, notebooks or a binder; not sepia nostalgia"
+        ]
+      ],
+      "sourcing": "The use examples are free-licensed stock, matched to these briefs until the project’s own photographs replace them. The subjects to avoid are free-licensed photographs too; card brands that appear in them are incidental."
+    },
+    "examples": [
+      {
+        "id": "checking",
+        "role": "use",
+        "source": "unsplash",
+        "retrieved": "2026-10-30",
+        "originalSha256": "50e5ff79826803d77f941534540839f7cf702e32a240214672542b7847cff457",
+        "author": "Glenn Carstens-Peters",
+        "page": "https://unsplash.com/photos/RLw-UC03Gwc",
+        "license": "Unsplash License",
+        "licenseUrl": "https://unsplash.com/license",
+        "published": "2017-01-15",
+        "brief": 0,
+        "alt": "A hand with a ballpoint pen fills in a checklist of boxes on a grid-lined notebook page.",
+        "caption": "Work checked line by line, by hand.",
+        "file": "assets/imagery/accrue-example-checking.webp"
+      },
+      {
+        "id": "desk",
+        "role": "use",
+        "source": "unsplash",
+        "retrieved": "2026-10-30",
+        "originalSha256": "51f459f8d6d7a01060843cc2542ff0c9c344b7e3bdff574fc6a1350d0d0e12bd",
+        "author": "Kari Shea",
+        "page": "https://unsplash.com/photos/1SAnrIxw5OY",
+        "license": "Unsplash License",
+        "licenseUrl": "https://unsplash.com/license",
+        "published": "2017-05-30",
+        "brief": 1,
+        "alt": "An open laptop with a dark screen on a pale wooden cabinet against a plain warm wall.",
+        "caption": "A quiet place where billing code gets written.",
+        "file": "assets/imagery/accrue-example-desk.webp"
+      },
+      {
+        "id": "records",
+        "role": "use",
+        "source": "unsplash",
+        "retrieved": "2026-10-30",
+        "originalSha256": "8832f136070fa782b121aaad90705aa323a9ae645e986a0fe4f25b00f3d37103",
+        "author": "Maksym Kaharlytskyi",
+        "page": "https://unsplash.com/photos/Q9y3LRuuxmg",
+        "license": "Unsplash License",
+        "licenseUrl": "https://unsplash.com/license",
+        "published": "2019-09-23",
+        "brief": 2,
+        "alt": "An open gray metal filing drawer packed with index cards and small yellow tab dividers.",
+        "caption": "Every record in its place, so it can be trusted later.",
+        "file": "assets/imagery/accrue-example-records.webp"
+      },
+      {
+        "id": "avoid-savings",
+        "source": "commons",
+        "role": "avoid",
+        "retrieved": "2026-11-01",
+        "originalSha256": "43dd5d130a0782c1250b6520984768d1e933f2c63c61add4dba80792ac472fab",
+        "author": "stevepb",
+        "page": "https://commons.wikimedia.org/wiki/File:Piggy-bank-968302.jpg",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "published": "2015-10-01",
+        "alt": "A glass jar with a red lid, a coin dropping in, a folded banknote and copper coins, with crayons in front.",
+        "caption": "Coin jars and piggy banks: the savings-app world, and another company named Accrue."
+      },
+      {
+        "id": "avoid-cards",
+        "source": "commons",
+        "role": "avoid",
+        "retrieved": "2026-11-01",
+        "originalSha256": "42c0dac6726c1e0d092c6a3b200414335763e9a181f7d526298dee5a0350fe20",
+        "author": "Yuri Samoilov",
+        "page": "https://commons.wikimedia.org/wiki/File:Bunch_of_credit_cards_(49860171753).jpg",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+        "published": "2020-05-06",
+        "alt": "A fan of credit cards on a dark surface, lit with blue and red edge light.",
+        "caption": "Glowing credit cards: payments marketing, not a library."
+      },
+      {
+        "id": "avoid-charts",
+        "source": "commons",
+        "role": "avoid",
+        "retrieved": "2026-11-01",
+        "originalSha256": "bfc84679b6c32b16285ec93d6e9e6fcf2a59d80490e2d707ed87c708227300f9",
+        "author": "unknown author",
+        "page": "https://commons.wikimedia.org/wiki/File:Stock_market_charts_illustration.jpg",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "published": "2017-03-17",
+        "alt": "A monitor showing stock market line charts and tables of figures on a dark screen.",
+        "caption": "Market charts and trading screens: growth, which Accrue doesn’t promise."
+      },
+      {
+        "id": "wrong-teal",
+        "role": "avoid",
+        "source": "derived",
+        "from": "records",
+        "vf": "eq=contrast=1.3:saturation=1.7,colorbalance=rs=-.35:gs=.15:bs=.25:rm=.05:bm=-.05:rh=.3:gh=0:bh=-.35",
+        "alt": "The filing-drawer photograph with a teal-and-orange grade: heavy saturation, blue shadows and orange highlights.",
+        "caption": "Teal and orange: the film-poster grade."
+      },
+      {
+        "id": "wrong-vignette",
+        "role": "avoid",
+        "source": "derived",
+        "from": "records",
+        "vf": "eq=contrast=1.2:saturation=1.25,vignette=angle=PI/2.6:mode=forward,noise=alls=34:allf=u:all_seed=7",
+        "alt": "The filing-drawer photograph with a heavy dark vignette and visible film grain.",
+        "caption": "Heavy vignette and grain: a filter, not daylight."
+      },
+      {
+        "id": "wrong-sepia",
+        "role": "avoid",
+        "source": "derived",
+        "from": "records",
+        "vf": "colorchannelmixer=.393:.769:.189:0:.349:.686:.168:0:.272:.534:.131:0",
+        "alt": "The filing-drawer photograph in brown sepia tones.",
+        "caption": "Sepia: nostalgia, not careful work today."
+      }
+    ],
+    "treatment": {
+      "rules": [
+        {
+          "aspect": "White balance:",
+          "rule": "neutral to a touch warm, so whites sit near Ledger Paper, never blue."
+        },
+        {
+          "aspect": "Contrast:",
+          "rule": "gentle. Bright areas stay soft and dark areas never go fully black, so no detail is lost."
+        },
+        {
+          "aspect": "Saturation:",
+          "rule": "well below the camera’s, so Ledger Green stays the strongest color on the page."
+        },
+        {
+          "aspect": "Shadows:",
+          "rule": "a faint green tint toward Ledger Green; bright areas stay neutral."
+        }
+      ],
+      "never": "No heavy filters, vignettes, fake grain or sepia, and never a teal-and-orange grade. The set should look like it was shot on one quiet afternoon.",
+      "lut": "assets/imagery/accrue-ledger-daylight.cube",
+      "howToApply": "A LUT (color lookup table) is a small file that applies one color grade to any photograph. Apply `accrue-ledger-daylight.cube` in Lightroom or Photoshop (Color Lookup), Resolve, Final Cut, Premiere or ffmpeg (`lut3d`), at 100% on a correctly exposed photograph; lower the opacity if a photo was already muted.",
+      "parameters": {
+        "contrast": 0.14,
+        "blackLift": 0.03,
+        "whiteRoll": 0.96,
+        "sat": 0.72,
+        "satKnee": 0.45,
+        "satKneeAmount": 0.3,
+        "warm": [
+          0.008,
+          0.002,
+          -0.012
+        ],
+        "shadowTint": [
+          -0.012,
+          0.006,
+          -0.002
+        ],
+        "shadowRange": 0.45
+      }
+    }
+  },
+  "graphicDevice": {
+    "head": "The closing line.",
+    "text": [
+      "The brand’s graphic device is the double line itself, taken from the logo: under a page title, under a total, under the headline of a talk slide. It says “this is final” in the convention every ledger has used.",
+      "Use it once per surface, as wide as what it sits under, in Line Green on light or Mint Line on dark. In the product, a small double line beside the word marks Paid; the full line goes under totals only."
+    ],
+    "never": "Not through or above words, not as a section divider, not in blue, not on a pending or failed value, and animated only as one left-to-right draw."
+  },
+  "graphicElements": {
+    "head": "A small set of graphic elements, each with one job.",
+    "items": [
+      [
+        "The closing line",
+        "closing",
+        "The double line under the one final thing on a surface: a title, a total, a slide headline.",
+        "Once per surface, as wide as what it sits under."
+      ],
+      [
+        "Column figures",
+        "figures",
+        "Amounts and IDs in IBM Plex Mono, right-aligned, with the currency code, so figures line up from top to bottom.",
+        "Real figures, or ones clearly marked as samples."
+      ],
+      [
+        "The lined table",
+        "table",
+        "Rows divided by Column Line hairlines, labels in spaced capitals. No zebra stripes, no boxes.",
+        "Use it for data to compare, never for page layout."
+      ],
+      [
+        "The voice line",
+        "quote",
+        "One sentence in Besley italic, the way a careful person would say it.",
+        "Once per surface, on Accrue’s own pages."
+      ]
+    ],
+    "never": "Not among the graphic elements: coins, piggy banks, wallets, credit cards, stairs and rising arrows, padlocks and shields, dollar signs as decoration, gradients, lined-paper patterns and repeated lines as texture."
+  },
+  "inTheProduct": {
+    "head": "In the product: Accrue Admin stays in the background.",
+    "intro": "Accrue Admin runs inside the host app. By default it shows Accrue’s own look; a host app can white-label it with its own name, logo and accent. These are starting points for Accrue Admin’s theme, not component specs.",
+    "items": [
+      [
+        "Status with its word",
+        "status",
+        "Paid in green with its double-line mark, Pending in brass, Failed in red ink. Always show the word: color is never the only signal.",
+        "Never green for a charge that has only been sent. Pending is not paid."
+      ],
+      [
+        "Action color",
+        "action",
+        "Buttons and the selected nav item use Ledger Green (Mint Line on dark), or the host app’s accent if set (`:admin_branding`). Other greens stay on status and the line.",
+        "One primary action per view."
+      ],
+      [
+        "Amounts in columns",
+        "amounts",
+        "IBM Plex Mono, right-aligned, currency code first, with the double line under the total.",
+        "Never animate amounts."
+      ],
+      [
+        "IDs you can copy",
+        "ids",
+        "Stripe and Braintree IDs and webhook event IDs in IBM Plex Mono, on Folio, selectable.",
+        "Never truncate an ID without a way to copy it whole."
+      ]
+    ],
+    "shape": "Shape: small, soft corners (a 6 px radius), flat surfaces and hairlines instead of shadows. These are Accrue’s own values for radius and elevation; a host app can override them in Accrue Admin’s theme. The header shows one name, never two: Accrue with “Admin”, or the host app’s own once white-labeled.",
+    "states": [
+      {
+        "whatAccrueKnows": "A charge or refund was sent; Stripe hasn’t answered",
+        "status": "obs",
+        "wordShown": "Sent to Stripe",
+        "example": "Refund re_1Pz2… for USD 64.67"
+      },
+      {
+        "whatAccrueKnows": "A webhook was received and verified; Accrue is updating its record",
+        "status": "obs",
+        "wordShown": "Received, updating",
+        "example": "invoice.paid, evt_1QA9…"
+      },
+      {
+        "whatAccrueKnows": "A retry or job is queued",
+        "status": "obs",
+        "wordShown": "Retry scheduled",
+        "example": "Attempt 3 of 4 on Nov 3"
+      },
+      {
+        "whatAccrueKnows": "Stripe or Braintree confirmed it, in its response or a verified webhook",
+        "status": "ok",
+        "wordShown": [
+          "Paid",
+          "Refunded",
+          "Active"
+        ],
+        "example": "Invoice in_1Q2c… paid"
+      },
+      {
+        "whatAccrueKnows": "Stripe, Braintree or a check refused it",
+        "status": "bad",
+        "wordShown": [
+          "Declined",
+          "Failed"
+        ],
+        "example": "Card declined by the issuer"
+      },
+      {
+        "whatAccrueKnows": "Nothing from Stripe yet, or the last update is old",
+        "status": "unk",
+        "wordShown": "No update",
+        "example": "No webhook for 24 hours"
+      }
+    ],
+    "messagePattern": [
+      "What happened, in the past tense, naming the object.",
+      "What is pending, and who acts next: Stripe, Braintree, Accrue, the host app or the person reading.",
+      "What they can do, as a link or button named for its outcome."
+    ],
+    "messages": [
+      {
+        "say": "Refund requested. Stripe hasn’t confirmed it yet. The status updates when the webhook arrives.",
+        "notThis": "Refund successful!"
+      },
+      {
+        "say": "Payment declined by the card issuer. Recovery retries on Nov 3. Retry now or email the customer.",
+        "notThis": "Error: card_declined."
+      },
+      {
+        "say": "No update: no webhook has arrived for this charge in 24 hours. Check it in the Stripe dashboard.",
+        "notThis": "Charge failed."
+      },
+      {
+        "say": "Cancel Riverside Dental’s Team plan now? Access ends today. No refund is issued.",
+        "notThis": "Are you sure?"
+      },
+      {
+        "say": "No invoices match these filters. [[Clear filters]]",
+        "notThis": "Clear or adjust the filters above to inspect matching billing records."
+      }
+    ],
+    "messageRules": [
+      "Use the support team’s words: customer, subscription, invoice, payment, refund. Module names and other technical terms belong in the details, for engineers.",
+      "Name the action for its result: “Cancel at period end”, “Cancel now”, “Retry payment”, never “Submit” or “OK”. A button or link on its own has no final period.",
+      "Before a destructive action, say what it affects and what happens, and offer the safer option beside it.",
+      "Say what the system does in the present tense (“updates when the webhook arrives”, not “will update”). No exclamation marks, no “Success”, and no middle dots as separators: use a comma or a new line."
+    ],
+    "type": [
+      {
+        "role": "Page title",
+        "spec": "Besley 600, 28/34 px",
+        "sample": "Riverside Dental"
+      },
+      {
+        "role": "Section title",
+        "spec": "Public Sans 600, 15/20 px",
+        "sample": "Invoices"
+      },
+      {
+        "role": "Text and controls",
+        "spec": "Public Sans 400, 14/20 px",
+        "sample": "Team plan, 12 seats"
+      },
+      {
+        "role": "Label",
+        "spec": "Public Sans 600, 11/12 px, capitals, +8%",
+        "sample": "LAST WEBHOOK"
+      },
+      {
+        "role": "Amounts and IDs",
+        "spec": "IBM Plex Mono 400, 14/20 px, tabular, right-aligned",
+        "sample": "USD 588.00"
+      }
+    ],
+    "neutrals": [
+      {
+        "role": "Background",
+        "light": "Ledger Paper",
+        "dark": "Ledger Green"
+      },
+      {
+        "role": "Panels and code",
+        "light": "Folio",
+        "dark": "Felt"
+      },
+      {
+        "role": "Hairlines",
+        "light": "Column Line",
+        "dark": "Ledger Paper at 16%"
+      },
+      {
+        "role": "Text",
+        "light": "Ledger Green",
+        "dark": "Ledger Paper"
+      },
+      {
+        "role": "Secondary text",
+        "light": "Pencil",
+        "dark": "Sage"
+      },
+      {
+        "role": "Actions",
+        "light": "Ledger Green, or the host app’s accent if one is set",
+        "dark": "Mint Line, or the host app’s accent if one is set"
+      },
+      {
+        "role": "Focus",
+        "light": "a 2 px Ledger Green outline, 2 px off the element",
+        "dark": "a 2 px Mint Line outline"
+      }
+    ]
+  },
+  "logoOnImages": {
+    "do": [
+      "On photographs and screenshots, place the lockup on a calm area: a wall, a table top, empty paper.",
+      "Use the light lockup over light areas and the dark lockup over dark ones, with the clear space free of detail.",
+      "If no calm area exists, move the logo off the image onto Ledger Paper or Ledger Green beside it."
+    ],
+    "dont": [
+      "No boxes, badges or blurred panels behind the logo.",
+      "Never over code, tables or figures, where the line reads as an underline."
+    ]
+  },
+  "useByOthers": [
+    "Hex packages, blogs, newsletters and conference sites may use the lockup and symbol unaltered, from these files, at no less than the minimum sizes.",
+    "In your own writing, write the name as plain text, “Accrue”; never imitate the wordmark.",
+    "Packages that extend Accrue use their own names and marks, and may say “for Accrue”, as in “Tax rates for Accrue”. They don’t use the double line.",
+    "Host apps never put the Accrue logo on their customers’ invoices, emails or Portal, and no “Powered by Accrue” line is needed.",
+    "Don’t use the marks to suggest an endorsement, audit or partnership that doesn’t exist."
+  ],
+  "legal": [
+    "Accrue is not a registered trademark. Use ™ (not ®) only to claim the name as a trademark, once, on the first prominent use in marketing; never on the logo itself.",
+    "Not to be confused with the consumer savings app, also named Accrue, at byaccrue.com: it is a different company. Accrue the library never uses wallet, savings or rewards language, coral or red as a brand color, or growth imagery.",
+    "The code is MIT-licensed. This book asks that the name and logo identify the official project only (see above).",
+    "Credit Pay (Ruby) and Laravel Cashier as prior art; never compare Accrue against them.",
+    "Fonts: SIL Open Font License 1.1 (see assets/fonts). Trademark clearance has not been done (see To review)."
+  ],
+  "contact": [
+    "Questions about the brand and requests to use it: the Accrue maintainers, through the project’s GitHub issues (github.com/szTheory/accrue).",
+    "Approval: changes to the logo, colors, type or sounds need a maintainer’s approval and a new version of this book. Everyday applications that follow these rules need none.",
+    "This book is versioned: touch-ups raise the decimal (2.1), a new identity raises the whole number (3.0). The revision history is below."
+  ],
+  "notNeeded": [
+    {
+      "item": "Mascot",
+      "why": "Considered, not proposed. A billing library is trusted for being exact; a character would pull it toward the consumer-app world it must stay out of."
+    },
+    {
+      "item": "A pattern or watermark",
+      "why": "A repeated double line reads as lined paper or a strikethrough. The double line appears once per surface."
+    },
+    {
+      "item": "Packaging, signage and stationery",
+      "why": "Accrue is a Hex package with no shop, office or stationery. HexDocs and the README are where people find it and where it speaks."
+    },
+    {
+      "item": "Co-branding with hosts",
+      "why": "Host apps never show Accrue to their customers, so there is no co-brand lockup. For conference or sponsor pairings, put the partner’s logo to the right with a 1 px Column Line divider, at a matching x-height."
+    }
+  ],
+  "openDecisions": [
+    {
+      "choice": "Shade values.",
+      "detail": "Ledger Green #17392D, Line Green #3F8A68, Mint Line #8FCBAA, Brass #D1A24E and Brass Ink #7D5A1F, as presented."
+    },
+    {
+      "choice": "Red Ink for failed outcomes.",
+      "detail": "Added in the book: #A33A2C on light, #F0937F on dark, always with the word; Paid Ink #2E6B4E for Paid on light."
+    },
+    {
+      "choice": "A fourth status, No update.",
+      "detail": "Pencil or Sage, for when Stripe hasn’t sent anything yet or its last update is old: Accrue’s own rule that no news is neither success nor failure."
+    },
+    {
+      "choice": "A heavier double line.",
+      "detail": "Each bar is now 100 units, the weight of the top of the a’s bowl, 68 apart and 120 under the baseline (the presentation drew 64, 44 and 110). The thinner line read as an underline."
+    },
+    {
+      "choice": "The symbol drawn per size.",
+      "detail": "Separate pixel-fitted drawings at 16, 24, 32, 48 and 64 px, each keeping both lines. The presentation scaled one drawing down."
+    },
+    {
+      "choice": "Besley italic for quotes.",
+      "detail": "Added for the voice line and pull quotes; the presentation used it once."
+    },
+    {
+      "choice": "Admin and Portal are silent.",
+      "detail": "Sound only on Accrue’s own surfaces, and only after a click."
+    },
+    {
+      "choice": "No Accrue name on host surfaces.",
+      "detail": "No logo or “Powered by” on invoices, emails or Portal. The branding config’s `business_name` default is “Accrue”; the product may want to require it."
+    },
+    {
+      "choice": "Accrue Admin’s default brand.",
+      "detail": "Accrue’s own brand by default (the lockup alone in the header, Ledger Green actions). The host app’s name, logo and accent replace it only when white-labeled, never both. Nothing is set beside the logo: “Admin” would add nothing. The product has to build the default and the switch."
+    },
+    {
+      "choice": "The tagline and the voice principles.",
+      "detail": "“Paid means paid.” replaces June 2026’s “Billing state, modeled clearly.”; the voice principles (measured, exact, native, durable) carry over."
+    },
+    {
+      "choice": "Light as the default background.",
+      "detail": "Ledger Paper for docs, the README and Accrue Admin; Ledger Green for the cover, talks, the social card and dark mode."
+    },
+    {
+      "choice": "Motion values.",
+      "detail": "A one-second close: the word in 180 ms, the lines drawn 240 to 620 and 660 to 960 ms; a 200 ms Paid mark."
+    },
+    {
+      "choice": "Example photographs.",
+      "detail": "Free-licensed stock, graded with the brand LUT, until the project’s own replace them."
+    },
+    {
+      "choice": "No website grid in the book.",
+      "detail": "A website build guide sets its own grid within the layout principles."
+    }
+  ],
+  "notChecked": "Trademark clearance (another company named Accrue, a consumer savings app, exists; on 30 October 2026 its site (coral on white) and those of Pay, Laravel Cashier and Bling showed none with a serif wordmark or bottle green), print color (proof against a physical swatch; no CMYK or Pantone values are given), the sounds on a range of real speakers, a HexDocs stylesheet and Accrue Admin’s theme built from these values, and the icons as Hex, Livebook and GitHub crop them.",
+  "fonts": {
+    "source": {
+      "repo": "https://github.com/google/fonts",
+      "commit": "b68b528a75da7d9b73f3928899c07a23083a6633"
+    },
+    "files": [
+      {
+        "path": "ofl/besley/Besley[wght].ttf",
+        "sha256": "71f352d8859c787631a0978161d48497a72caa69dcae6996d6712a564df86c1e",
+        "file": "Besley[wght].ttf"
+      },
+      {
+        "path": "ofl/besley/Besley-Italic[wght].ttf",
+        "sha256": "de502a1ab6b06a63982dce8c9e58b3eee8aada175e78d5a4dc0a7b3721f26562",
+        "file": "Besley-Italic[wght].ttf"
+      },
+      {
+        "path": "ofl/besley/OFL.txt",
+        "sha256": "e8d81ba3b06080b764626d4385f319344e102ddf2c08bb4209412ac22d695f69",
+        "file": "OFL-Besley.txt"
+      },
+      {
+        "path": "ofl/publicsans/PublicSans[wght].ttf",
+        "sha256": "d75a7dc1a27eb9e336d5b33f55489d2ecb5621bf694d5c43b2415bce2ca830a8",
+        "file": "PublicSans[wght].ttf"
+      },
+      {
+        "path": "ofl/publicsans/PublicSans-Italic[wght].ttf",
+        "sha256": "6ce292b05aa8c66bc644bedff834b4d0ddee9af75c55f98dcb28faa32a81056f",
+        "file": "PublicSans-Italic[wght].ttf"
+      },
+      {
+        "path": "ofl/publicsans/OFL.txt",
+        "sha256": "157a9e77f7580246e97c769490e2e977ae94399f9d30f4556015c41fe8c28bac",
+        "file": "OFL-PublicSans.txt"
+      },
+      {
+        "path": "ofl/ibmplexmono/IBMPlexMono-Regular.ttf",
+        "sha256": "6a3412f058c7d8dfd9170c41e85ade48e5156ecb89356110ca57a0a27734af46",
+        "file": "IBMPlexMono-Regular.ttf"
+      },
+      {
+        "path": "ofl/ibmplexmono/IBMPlexMono-Medium.ttf",
+        "sha256": "a9b4c49bb299e05b5f6c481e7fb5e78943d2793249a0c8874ab574a2d1ea6755",
+        "file": "IBMPlexMono-Medium.ttf"
+      },
+      {
+        "path": "ofl/ibmplexmono/OFL.txt",
+        "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+        "file": "OFL-IBMPlexMono.txt"
+      }
+    ]
+  },
+  "files": [
+    {
+      "need": "HexDocs, the README, documents and slides on a light background",
+      "files": [
+        "assets/logo/accrue-lockup-light.svg"
+      ]
+    },
+    {
+      "need": "The same on Ledger Green or another dark background",
+      "files": [
+        "assets/logo/accrue-lockup-dark.svg"
+      ]
+    },
+    {
+      "need": "One-color printing, engraving, embroidery",
+      "files": [
+        "assets/logo/accrue-lockup-mono-ledger-green.svg",
+        "assets/logo/accrue-lockup-mono-paper.svg"
+      ]
+    },
+    {
+      "need": "The symbol alone: avatars, the Accrue Admin sidebar, stickers",
+      "files": [
+        "assets/logo/accrue-symbol-light.svg",
+        "assets/logo/accrue-symbol-dark.svg",
+        "assets/logo/accrue-symbol-mono-ledger-green.svg"
+      ]
+    },
+    {
+      "need": "64 px and below: the symbol drawn for each size (use the file for the size)",
+      "files": [
+        "assets/logo/accrue-symbol-16-light.svg",
+        "assets/logo/accrue-symbol-16-dark.svg",
+        "assets/logo/accrue-symbol-24-light.svg",
+        "assets/logo/accrue-symbol-24-dark.svg",
+        "assets/logo/accrue-symbol-32-light.svg",
+        "assets/logo/accrue-symbol-32-dark.svg",
+        "assets/logo/accrue-symbol-48-light.svg",
+        "assets/logo/accrue-symbol-48-dark.svg",
+        "assets/logo/accrue-symbol-64-light.svg",
+        "assets/logo/accrue-symbol-64-dark.svg"
+      ]
+    },
+    {
+      "need": "The closing line as a graphic (titles, totals, slides)",
+      "files": [
+        "assets/logo/accrue-closing-line-light.svg",
+        "assets/logo/accrue-closing-line-dark.svg"
+      ]
+    },
+    {
+      "need": "App tile: Hex, Livebook, GitHub, avatars",
+      "files": [
+        "assets/icon/accrue-tile.svg",
+        "assets/icon/accrue-tile-1024.png",
+        "assets/icon/accrue-tile-512.png",
+        "assets/icon/accrue-tile-64.png"
+      ]
+    },
+    {
+      "need": "Browser tab, HexDocs favicon and home screen",
+      "files": [
+        "assets/icon/favicon.svg",
+        "assets/icon/favicon-32.png",
+        "assets/icon/favicon-16.png",
+        "assets/icon/accrue.ico",
+        "assets/icon/apple-touch-icon-180.png"
+      ]
+    },
+    {
+      "need": "GitHub social preview and avatars",
+      "files": [
+        "assets/social/accrue-social-preview-1280x640.png",
+        "assets/social/accrue-avatar-1024.png"
+      ]
+    },
+    {
+      "need": "Sounds: raw WAVs for sound designers; MP3s mastered for speakers, for the web and videos",
+      "files": [
+        "assets/sound/",
+        "assets/sound/listening/"
+      ]
+    },
+    {
+      "need": "The logo animation with its sound, for videos and talks",
+      "files": [
+        "assets/motion/accrue-logo-animation.mp4",
+        "assets/motion/accrue-logo-animation.webm"
+      ]
+    },
+    {
+      "need": "The photo grade (a LUT) and the example photos, with licenses",
+      "files": [
+        "assets/imagery/accrue-ledger-daylight.cube",
+        "assets/imagery/README.md"
+      ]
+    },
+    {
+      "need": "Fonts for design apps (install) and the web",
+      "files": [
+        "assets/fonts/variable/",
+        "assets/fonts/static/",
+        "assets/fonts/web/"
+      ]
+    },
+    {
+      "need": "Colors (code colors included), type and motion values for Accrue Admin’s theme and HexDocs",
+      "files": [
+        "tokens.json",
+        "assets/code/accrue-exdoc.css"
+      ]
+    },
+    {
+      "need": "The whole brand as data, or as text for an AI assistant",
+      "files": [
+        "brand.json",
+        "BRAND.md"
+      ]
+    },
+    {
+      "need": "This book to print or send, a one-page summary, and a visual guide to every file",
+      "files": [
+        "accrue-brand-book.pdf",
+        "accrue-one-page.pdf",
+        "assets/index.html"
+      ]
+    }
+  ]
+}

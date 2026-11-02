@@ -1,0 +1,3 @@
+/* Accrue code colors for ExDoc (HexDocs), version 2.0. Add with before_closing_head_tag. */
+body .makeup{color:#17392D}body .makeup :is(.c,.c1,.cm,.cd){color:#5B6A60}body .makeup :is(.s,.s1,.s2,.sb,.sh,.si,.sx){color:#74476A}body .makeup :is(.ss,.na,.m,.mi,.mf,.mh){color:#3D5876}body .makeup :is(.k,.kd,.kn,.nc,.nn){color:#17392D;font-weight:600}body .makeup :is(.n,.nf,.o,.p){color:#17392D}
+body.dark .makeup{color:#F3EEDF}body.dark .makeup :is(.c,.c1,.cm,.cd){color:#A7BCAE}body.dark .makeup :is(.s,.s1,.s2,.sb,.sh,.si,.sx){color:#D9B4CC}body.dark .makeup :is(.ss,.na,.m,.mi,.mf,.mh){color:#AFC4DC}body.dark .makeup :is(.k,.kd,.kn,.nc,.nn){color:#F3EEDF;font-weight:600}body.dark .makeup :is(.n,.nf,.o,.p){color:#F3EEDF}
